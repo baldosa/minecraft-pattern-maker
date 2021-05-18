@@ -1,6 +1,10 @@
 <template>
   <div class="is-full-screen" ref="canvasBox">
-    <v-stage :config="stageSize">
+    <v-stage
+      ref="stage"
+      :config="stageSize"
+      @click="handleMouseMove"
+    >
       <v-layer>
         <v-rect
           v-for="(rect, index) in rects"
@@ -15,6 +19,7 @@
           :config="sqrs[index]"
           @dragstart="handleDragStart"
           @dragend="handleDragEnd"
+          @click="test"
         />
       </v-layer>
     </v-stage>
@@ -29,8 +34,9 @@
 </template>
 
 <script>
-const width = window.innerWidth;
-const height = window.innerHeight-50;
+// const width = window.innerWidth;
+const width = window.innerWidth-600;
+const height = window.innerHeight;
 
 export default {
   props: {
@@ -43,7 +49,8 @@ export default {
     return {
       stageSize: {
         width: width,
-        height: height
+        height: height,
+        draggable: true
       },
       isDragging: false
     }
@@ -89,16 +96,26 @@ export default {
   },
   methods: {
     handleDragStart() {
+      console.log('handlestart')
       this.isDragging = true;
     },
     handleDragEnd(e) {
-      console.log(this.$refs.canvasBox.clientHeight)
       e.target.to({
         x: Math.round(e.target.x() / 50) * 50,
         y: Math.round(e.target.y() / 50) * 50
       })
       console.log('handleend')
       this.isDragging = false;
+    },
+    test (e) {
+      console.log('tap', e)
+    },
+    handleMouseMove() {
+      const mousePos = this.$refs.stage.getNode().getPointerPosition();
+      const x = mousePos.x
+      const y = mousePos.y
+      console.log({x:x, y: y})
+      this.$emit('click', {x: x, y: y});
     }
   }
 };

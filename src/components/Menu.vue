@@ -19,6 +19,7 @@
         v-for="(block, index) in filteredBlocks"
         v-bind:key="index"
         :block="block"
+        :is-active="false"
         @click="getImgData"
       />
     </div>
@@ -53,13 +54,11 @@ export default {
         this.typing = false
         this.searchVal = event.target.value
         if (event.target.value) {
-          console.log('asd')
           this.filteredBlocks = this.blocks.filter((item) => item.name.includes(this.searchVal.toLowerCase()))
         }
       }, 600)
     },
     getImgData (value) {
-      console.log(value)
       this.$emit('click', value.block)
     }
   }

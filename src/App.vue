@@ -61,8 +61,8 @@ export default {
     setPos (pos) {
       this.pos = pos
       this.newSqr = {
-        x: this.pos.x,
-        y: this.pos.y,
+        x: Math.round(this.pos.x / 50) * 50,
+        y: Math.round(this.pos.y / 50) * 50,
         width: 50,
         height: 50,
         draggable: true,

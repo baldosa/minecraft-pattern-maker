@@ -52,29 +52,29 @@ export default {
         height: height,
         draggable: true
       },
-      isDragging: false
+      isDragging: false,
+      sqrWidth: 50,
+      sqrHeight: 50
     }
   },
   computed: {
     rects () {
-      const SQRWIDTH = 50;
-      const SQRHEIGHT = 50;
 
       let rects = []
 
       const stagePos = {x: 0, y: 0}
-      const startX = Math.floor((-stagePos.x - width) / SQRWIDTH) * SQRWIDTH;
+      const startX = Math.floor((-stagePos.x - width) / this.sqrWidth) * this.sqrWidth;
       const endX =
-        Math.floor((-stagePos.x + width * 2) / SQRWIDTH) * SQRWIDTH;
+        Math.floor((-stagePos.x + width * 2) / this.sqrWidth) * this.sqrWidth;
 
       const startY =
-        Math.floor((-stagePos.y - height) / SQRHEIGHT) * SQRHEIGHT;
+        Math.floor((-stagePos.y - height) / this.sqrHeight) * this.sqrHeight;
       const endY =
-        Math.floor((-stagePos.y + height * 2) / SQRHEIGHT) * SQRHEIGHT;
+        Math.floor((-stagePos.y + height * 2) / this.sqrHeight) * this.sqrHeight;
 
       var i = 0;
-      for (var x = startX; x < endX; x += SQRWIDTH) {
-        for (var y = startY; y < endY; y += SQRHEIGHT) {
+      for (var x = startX; x < endX; x += this.sqrWidth) {
+        for (var y = startY; y < endY; y += this.sqrHeight) {
           if (i === 4) {
             i = 0;
           }
@@ -83,8 +83,8 @@ export default {
             {
               x: x,
               y: y,
-              width: SQRWIDTH,
-              height: SQRHEIGHT,
+              width: this.sqrWidth,
+              height: this.sqrHeight,
               stroke: "grey",
               strokeWidth: 0.3
             }
@@ -101,14 +101,14 @@ export default {
     },
     handleDragEnd(e) {
       e.target.to({
-        x: Math.round(e.target.x() / 50) * 50,
-        y: Math.round(e.target.y() / 50) * 50
+        x: Math.round(e.target.x() / this.sqrHeight) * this.sqrWidth,
+        y: Math.round(e.target.y() / this.sqrHeight) * this.sqrWidth
       })
       console.log('handleend')
       this.isDragging = false;
     },
-    test (e) {
-      console.log('tap', e)
+    test (currentTarget) {
+      console.log('tap', currentTarget)
     },
     handleMouseMove() {
       const mousePos = this.$refs.stage.getNode().getPointerPosition();

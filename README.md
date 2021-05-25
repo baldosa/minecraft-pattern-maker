@@ -1,6 +1,6 @@
 # Minecraft Pattern Maker
 
-A simple Pattern Maker
+A simple Pattern Maker. Demo in [Netlify](https://sad-torvalds-e65189.netlify.app/)
 
 ## Getting Started
 
@@ -25,7 +25,7 @@ cd minecraft-pattern-maker
 yarn
 
 # start local development server and watch for changes
-# with a local server on http://127.0.0.1:8008
+# with a local server on http://127.0.0.1:8080
 yarn serve
 
 # Compiles and minifies for production

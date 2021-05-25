@@ -1,14 +1,9 @@
 <template>
   <div>
-    <!-- <button @click="add">ADD!</button> -->
-    <button @click="getImgs('terracotta')">TEST!</button>
-    <label for="search">
-      Search blocks
-    </label>
     <input
       id="search"
       type="text"
-      placeholder="Text Input"
+      placeholder="Search blocks"
       @input="searchBlock"
     />
     <div

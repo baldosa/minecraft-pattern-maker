@@ -14,7 +14,7 @@ export default {
   props: {
     block: {
       type: Object,
-      requred: true
+      require: true
     }
   },
   data () {

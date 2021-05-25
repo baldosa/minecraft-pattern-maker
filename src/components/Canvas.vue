@@ -19,17 +19,10 @@
           :config="sqrs[index]"
           @dragstart="handleDragStart"
           @dragend="handleDragEnd"
-          @click="test"
+          @contextmenu="contextMenu($event, square.id)"
         />
       </v-layer>
     </v-stage>
-    <!-- <div
-          v-for="(rect, index) in rects"
-          v-bind:key="index"
-    >
-    {{rect}}
-    </div> -->
-
   </div>
 </template>
 
@@ -54,7 +47,10 @@ export default {
       },
       isDragging: false,
       sqrWidth: 50,
-      sqrHeight: 50
+      sqrHeight: 50,
+      showMenu: false,
+      target: null,
+      block: null
     }
   },
   computed: {
@@ -86,7 +82,11 @@ export default {
               width: this.sqrWidth,
               height: this.sqrHeight,
               stroke: "grey",
-              strokeWidth: 0.3
+              strokeWidth: 0.3,
+              center: {
+                x: x + ((this.sqrWidth) / 2),
+                y: y + ((this.sqrHeight) / 2)
+              }
             }
           )
         }
@@ -95,11 +95,11 @@ export default {
     }
   },
   methods: {
-    handleDragStart() {
+    handleDragStart () {
       console.log('handlestart')
       this.isDragging = true;
     },
-    handleDragEnd(e) {
+    handleDragEnd (e) {
       e.target.to({
         x: Math.round(e.target.x() / this.sqrHeight) * this.sqrWidth,
         y: Math.round(e.target.y() / this.sqrHeight) * this.sqrWidth
@@ -107,15 +107,19 @@ export default {
       console.log('handleend')
       this.isDragging = false;
     },
-    test (currentTarget) {
-      console.log('tap', currentTarget)
+    contextMenu (e, blockId) {
+      if (e.evt.button === 2) {
+        e.evt.preventDefault()
+        this.$emit('contextmenu', {
+         blockId: blockId,
+         position: {y: e.evt.y, x: e.evt.x}
+        })
+      }
     },
-    handleMouseMove() {
-      const mousePos = this.$refs.stage.getNode().getPointerPosition();
-      const x = mousePos.x
-      const y = mousePos.y
-      console.log({x:x, y: y})
-      this.$emit('click', {x: x, y: y});
+    handleMouseMove(event) {
+      if (event.target.attrs.center && event.evt.button === 0) {
+        this.$emit('click', event.target.attrs.center)
+      }
     }
   }
 };
@@ -126,4 +130,6 @@ body {
   margin: 0;
   padding: 0;
 }
+
+
 </style>

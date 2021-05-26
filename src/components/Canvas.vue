@@ -27,6 +27,7 @@
 </template>
 
 <script>
+const blockSize = 16 * 4
 // const width = window.innerWidth;
 const width = window.innerWidth-600;
 const height = window.innerHeight;
@@ -46,8 +47,8 @@ export default {
         draggable: true
       },
       isDragging: false,
-      sqrWidth: 50,
-      sqrHeight: 50,
+      sqrWidth: blockSize,
+      sqrHeight: blockSize,
       showMenu: false,
       target: null,
       block: null

@@ -44,6 +44,8 @@ import Canvas from './components/Canvas.vue'
 import blocks from '@/assets/blocks.json'
 import Block from '@/components/Block'
 
+const blockSize = 16 * 4
+
 export default {
   name: 'App',
   components: {
@@ -85,10 +87,10 @@ export default {
       this.sqrId = this.sqrId + 1
       // do stuff to align new sqr to grid
       this.sqrs.push({
-        x: Math.round((this.pos.x-1) / 50) * 50,
-        y: Math.round((this.pos.y-1) / 50) * 50,
-        width: 50,
-        height: 50,
+        x: Math.round((this.pos.x-1) / blockSize) * blockSize,
+        y: Math.round((this.pos.y-1) / blockSize) * blockSize,
+        width: blockSize,
+        height: blockSize,
         draggable: true,
         shadowBlur: 0,
         image: this.image,

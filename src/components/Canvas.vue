@@ -27,7 +27,7 @@
 </template>
 
 <script>
-const blockSize = 16 * 4
+const blockSize = 16 * 3
 // const width = window.innerWidth;
 const width = window.innerWidth-600;
 const height = window.innerHeight;

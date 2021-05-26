@@ -44,7 +44,7 @@ import Canvas from './components/Canvas.vue'
 import blocks from '@/assets/blocks.json'
 import Block from '@/components/Block'
 
-const blockSize = 16 * 4
+const blockSize = 16 * 3
 
 export default {
   name: 'App',

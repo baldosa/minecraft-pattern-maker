@@ -12,7 +12,7 @@
           :config="rect"
         />
       </v-layer>
-      <v-layer>
+      <v-layer ref="sqrslyr">
         <v-image
           v-for="(square, index) in sqrs"
           v-bind:key="index"
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+const blockSize = 16 * 3
 // const width = window.innerWidth;
 const width = window.innerWidth-600;
 const height = window.innerHeight;
@@ -46,8 +47,8 @@ export default {
         draggable: true
       },
       isDragging: false,
-      sqrWidth: 50,
-      sqrHeight: 50,
+      sqrWidth: blockSize,
+      sqrHeight: blockSize,
       showMenu: false,
       target: null,
       block: null
@@ -84,8 +85,8 @@ export default {
               stroke: "grey",
               strokeWidth: 0.3,
               center: {
-                x: x + ((this.sqrWidth) / 2),
-                y: y + ((this.sqrHeight) / 2)
+                x: x + ((this.sqrWidth) / 2) + 0.5,
+                y: y + ((this.sqrHeight) / 2) + 0.5
               }
             }
           )
@@ -93,6 +94,13 @@ export default {
       }
       return rects
     }
+  },
+  mounted() {
+    const layer = this.$refs.sqrslyr.getNode()
+    const nativeCtx = layer.getContext()._context
+    nativeCtx.webkitImageSmoothingEnabled = false
+    nativeCtx.mozImageSmoothingEnabled = false
+    nativeCtx.imageSmoothingEnabled = false
   },
   methods: {
     handleDragStart () {

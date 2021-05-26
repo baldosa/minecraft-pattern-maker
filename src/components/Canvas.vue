@@ -12,7 +12,7 @@
           :config="rect"
         />
       </v-layer>
-      <v-layer>
+      <v-layer ref="sqrslyr">
         <v-image
           v-for="(square, index) in sqrs"
           v-bind:key="index"
@@ -93,6 +93,13 @@ export default {
       }
       return rects
     }
+  },
+  mounted() {
+    const layer = this.$refs.sqrslyr.getNode()
+    const nativeCtx = layer.getContext()._context
+    nativeCtx.webkitImageSmoothingEnabled = false
+    nativeCtx.mozImageSmoothingEnabled = false
+    nativeCtx.imageSmoothingEnabled = false
   },
   methods: {
     handleDragStart () {

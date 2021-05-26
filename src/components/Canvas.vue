@@ -85,8 +85,8 @@ export default {
               stroke: "grey",
               strokeWidth: 0.3,
               center: {
-                x: x + ((this.sqrWidth) / 2),
-                y: y + ((this.sqrHeight) / 2)
+                x: x + ((this.sqrWidth) / 2) + 0.5,
+                y: y + ((this.sqrHeight) / 2) + 0.5
               }
             }
           )

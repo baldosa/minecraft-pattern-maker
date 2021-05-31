@@ -1,15 +1,15 @@
 <template>
-  <div class="is-full-screen" ref="canvasBox">
+  <div class="is-full-screen">
     <v-stage
       ref="stage"
       :config="stageSize"
-      @click="handleMouseMove"
     >
       <v-layer>
         <v-rect
           v-for="(rect, index) in rects"
           v-bind:key="index"
           :config="rect"
+          @click="mouseClickOnRect"
         />
       </v-layer>
       <v-layer ref="sqrslyr">
@@ -17,8 +17,9 @@
           v-for="(square, index) in sqrs"
           v-bind:key="index"
           :config="sqrs[index]"
+          @click="selectBlock(square.id)"
           @dragstart="handleDragStart"
-          @dragend="handleDragEnd"
+          @dragend="handleDragEnd($event, square.id)"
           @contextmenu="contextMenu($event, square.id)"
         />
       </v-layer>
@@ -28,21 +29,23 @@
 
 <script>
 const blockSize = 16 * 3
-// const width = window.innerWidth;
-const width = window.innerWidth-600;
 const height = window.innerHeight;
 
 export default {
   props: {
     sqrs: {
       type: Array,
-      requred: true
+      required: true
+    },
+    stageWidth: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
       stageSize: {
-        width: width,
+        width: this.stageWidth,
         height: height,
         draggable: true
       },
@@ -60,9 +63,9 @@ export default {
       let rects = []
 
       const stagePos = {x: 0, y: 0}
-      const startX = Math.floor((-stagePos.x - width) / this.sqrWidth) * this.sqrWidth;
+      const startX = Math.floor((-stagePos.x - this.stageWidth) / this.sqrWidth) * this.sqrWidth;
       const endX =
-        Math.floor((-stagePos.x + width * 2) / this.sqrWidth) * this.sqrWidth;
+        Math.floor((-stagePos.x + this.stageWidth * 2) / this.sqrWidth) * this.sqrWidth;
 
       const startY =
         Math.floor((-stagePos.y - height) / this.sqrHeight) * this.sqrHeight;
@@ -107,27 +110,40 @@ export default {
       console.log('handlestart')
       this.isDragging = true;
     },
-    handleDragEnd (e) {
+    handleDragEnd (e, blockId) {
       e.target.to({
         x: Math.round(e.target.x() / this.sqrHeight) * this.sqrWidth,
         y: Math.round(e.target.y() / this.sqrHeight) * this.sqrWidth
       })
       console.log('handleend')
       this.isDragging = false;
+      this.$emit('dragend', {
+        position: {
+          x: Math.round(e.target.x() / this.sqrHeight) * this.sqrWidth,
+          y: Math.round(e.target.y() / this.sqrHeight) * this.sqrWidth
+        },
+        blockId: blockId,
+        center: {
+          x: Math.round(e.target.x() / this.sqrHeight) * this.sqrWidth + ((this.sqrWidth) / 2) + 0.5,
+          y: Math.round(e.target.y() / this.sqrHeight) * this.sqrWidth + ((this.sqrHeight) / 2) + 0.5
+        }
+      })
     },
     contextMenu (e, blockId) {
       if (e.evt.button === 2) {
         e.evt.preventDefault()
         this.$emit('contextmenu', {
-         blockId: blockId,
-         position: {y: e.evt.y, x: e.evt.x}
+         blockId: blockId
         })
       }
     },
-    handleMouseMove(event) {
+    mouseClickOnRect(event) {
       if (event.target.attrs.center && event.evt.button === 0) {
         this.$emit('click', event.target.attrs.center)
       }
+    },
+    selectBlock (blockId) {
+      this.$emit('clicked', blockId)
     }
   }
 };

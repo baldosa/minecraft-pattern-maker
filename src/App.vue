@@ -1,13 +1,17 @@
 <template>
   <div id="app" class="row is-marginless">
-    <div class="col-9 is-marginless">
+    <div class="col-9 is-marginless" ref="canvas">
       <Canvas
+        v-if="loaded"
         :sqrs.sync="sqrs"
+        :stage-width="stageWidth"
         @click="addBlockToCanvas"
         @contextmenu="contextMenu"
+        @dragend="handleBlockReposition"
+        @clicked="selectBlock"
       />
     </div>
-    <div class="col-3 bg-light is-marginless">
+    <div class="col-3 bg-light">
       <div>
         <input
           id="search"
@@ -54,6 +58,7 @@ export default {
   },
   data () {
     return {
+      loaded: false,
       sqrs: [],
       pos: {
         x: 20,
@@ -67,6 +72,10 @@ export default {
       sqrId: 0,
       selectedSqr: null
     }
+  },
+  mounted () {
+    this.stageWidth = this.$refs.canvas.clientWidth
+    this.loaded = true
   },
   methods: {
     /**
@@ -122,12 +131,12 @@ export default {
     contextMenu (data) {
       console.log(data)
       this.selectedSqr = data.blockId
-      this.pos = data.position
+      let sqr = this.sqrs.find(obj => obj.id == this.selectedSqr)
       // show menu
       let menuNode = this.$refs.menu
       menuNode.style.display = 'block'
-      menuNode.style.top = this.pos.y + 4 +'px'
-      menuNode.style.left = this.pos.x + 4 + 'px'
+      menuNode.style.top = sqr.y + 4 +'px'
+      menuNode.style.left = sqr.x + 4 + 'px'
     },
     delImage () {
       // let blockInfo = this.sqrs.filter(block => block.id = this.selectedSqr)[0]
@@ -139,21 +148,49 @@ export default {
     },
     rotateRight () {
       let sqr = this.sqrs.find(obj => obj.id == this.selectedSqr)
-      console.log('start', sqr.x, sqr.y)
-      sqr.rotation = sqr.rotation + 90
-      sqr.x = Math.round((this.pos.x) / 50) * 50
-      sqr.y = Math.round((this.pos.y) / 50) * 50
+      // console.log('start', sqr.x, sqr.y)
+      // sqr.rotation = sqr.rotation + 90
+      const rotation = sqr.rotation + 90
+      this.rotateAroundCenter(sqr, rotation)
       console.log('end', sqr.x, sqr.y)
     },
     rotateLeft () {
       let sqr = this.sqrs.find(obj => obj.id == this.selectedSqr)
       console.log('start', sqr.x, sqr.y)
-      sqr.rotation = sqr.rotation - 90
+      const rotation = sqr.rotation - 90
+      this.rotateAroundCenter(sqr, rotation)
       console.log('end', sqr.x, sqr.y)
     },
     closeMenu () {
       this.$refs.menu.style.display = 'none'
+    },
+    handleBlockReposition (data) {
+      let sqr = this.sqrs.find(obj => obj.id == data.blockId)
+      sqr.x = data.position.x
+      sqr.y = data.position.y
+      sqr.center = data.center
+      console.log(sqr.center)
+    },
+    selectBlock (blockId) {
+      console.log(blockId)
+    },
+    rotatePoint ({ x, y }, deg) {
+    const degToRad = Math.PI / 180
+    const rcos = Math.cos(deg * degToRad), rsin = Math.sin(deg * degToRad)
+    return {x: x*rcos - y*rsin, y: y*rcos + x*rsin}
+    },
+    rotateAroundCenter (sqr, rotation) {
+      const topLeft = { x: -blockSize / 2, y: -blockSize / 2 }
+      const current = this.rotatePoint(topLeft, sqr.rotation)
+      const rotated = this.rotatePoint(topLeft, rotation)
+      const dx = rotated.x - current.x, 
+        dy = rotated.y - current.y
+
+      sqr.x = Math.round((sqr.x + dx-1) / blockSize) * blockSize
+      sqr.y = Math.round((sqr.y + dy-1) / blockSize) * blockSize
+      sqr.rotation = rotation
     }
+
   }
 }
 </script>

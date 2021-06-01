@@ -12,23 +12,42 @@
       />
     </div>
     <div class="col-3 bg-light">
-      <div>
-        <input
-          id="search"
-          type="text"
-          placeholder="Search blocks"
-          @input="searchBlock"
-        />
-        <div
-          class="mt-2"
-          v-if="filteredBlocks"
-        >
-          <Block
-            v-for="(block, index) in filteredBlocks"
-            v-bind:key="index"
-            :block="block"
-            @click="getImgData"
+      <div
+        v-if="Object.keys(square).length"
+        class="row"
+      >
+        <div class="col">
+          <img
+            :src="square.block"
+            :style="`transform: rotate(${square.rotation}deg);`"
           />
+          <div class="row">
+            <div class="col">
+              <button class="button icon-only" @click="previewRotate(-90)">↪</button>
+              <button class="button icon-only" @click="previewRotate(90)">↩</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <input
+            id="search"
+            type="text"
+            placeholder="Search blocks"
+            @input="searchBlock"
+          />
+          <div
+            class="mt-2"
+            v-if="filteredBlocks"
+          >
+            <Block
+              v-for="(block, index) in filteredBlocks"
+              v-bind:key="index"
+              :block="block"
+              @click="getImgData"
+            />
+          </div>
         </div>
       </div>
       <div ref="menu" id="menu">
@@ -64,6 +83,7 @@ export default {
         x: 20,
         y: 20
       },
+      square: {},
       image: null,
       blocks: blocks,
       searchVal: null,
@@ -86,7 +106,12 @@ export default {
       image.src = block.block
       image.onload = () => {
         this.image = image
-      }
+        this.square = {
+          image: image,
+          block: block.block,
+          rotation: 0
+        }
+        }
     },
     /**
      * Adds selected block to canvas
@@ -94,22 +119,27 @@ export default {
     addBlockToCanvas (pos) {
       this.pos = pos
       this.sqrId = this.sqrId + 1
-      // do stuff to align new sqr to grid
-      this.sqrs.push({
+      const square = { ...this.square }
+      Object.assign(square, {
         x: Math.round((this.pos.x-1) / blockSize) * blockSize,
         y: Math.round((this.pos.y-1) / blockSize) * blockSize,
         width: blockSize,
         height: blockSize,
         draggable: true,
         shadowBlur: 0,
-        image: this.image,
-        rotation: 0,
         center: {
           x: this.pos.x,
           y: this.pos.y
         },
-        id: this.sqrId
+        id: this.sqrId,
+        rotation: 0
       })
+      // do stuff to align new sqr to grid
+      this.sqrs.push(square)
+      if (this.square.rotation != 0) {
+        let sqr = this.sqrs.find(obj => obj.id == this.sqrId)
+        this.rotateAroundCenter(sqr, this.square.rotation)
+      }
     },
     /**
      * busca al tipear
@@ -147,18 +177,14 @@ export default {
     },
     rotateRight () {
       let sqr = this.sqrs.find(obj => obj.id == this.selectedSqr)
-      // console.log('start', sqr.x, sqr.y)
-      // sqr.rotation = sqr.rotation + 90
       const rotation = sqr.rotation + 90
       this.rotateAroundCenter(sqr, rotation)
       console.log('end', sqr.x, sqr.y)
     },
     rotateLeft () {
       let sqr = this.sqrs.find(obj => obj.id == this.selectedSqr)
-      console.log('start', sqr.x, sqr.y)
       const rotation = sqr.rotation - 90
       this.rotateAroundCenter(sqr, rotation)
-      console.log('end', sqr.x, sqr.y)
     },
     closeMenu () {
       this.$refs.menu.style.display = 'none'
@@ -188,6 +214,10 @@ export default {
       sqr.x = Math.round((sqr.x + dx-1) / blockSize) * blockSize
       sqr.y = Math.round((sqr.y + dy-1) / blockSize) * blockSize
       sqr.rotation = rotation
+    },
+    previewRotate (deg) {
+      console.log(deg)
+      this.square.rotation = this.square.rotation + deg
     }
 
   }
@@ -214,5 +244,11 @@ export default {
   border: none;
   margin: 0;
   padding: 15px;
+}
+img {
+  width: 48px;
+  height: 48px;
+  margin: 10px;
+  image-rendering: pixelated;
 }
 </style>

@@ -3,6 +3,7 @@
     <v-stage
       ref="stage"
       :config="stageSize"
+      @wheel="handleZoom"
     >
       <v-layer>
         <v-rect
@@ -18,7 +19,6 @@
           v-bind:key="index"
           :config="sqrs[index]"
           @click="selectBlock(square.id)"
-          @dragstart="handleDragStart"
           @dragend="handleDragEnd($event, square.id)"
           @contextmenu="contextMenu($event, square.id)"
         />
@@ -47,13 +47,12 @@ export default {
       stageSize: {
         width: this.stageWidth,
         height: height,
-        draggable: true
+        draggable: true,
+        scaleX: 1,
+        scaleY: 1
       },
-      isDragging: false,
       sqrWidth: blockSize,
       sqrHeight: blockSize,
-      showMenu: false,
-      target: null,
       block: null
     }
   },
@@ -106,26 +105,24 @@ export default {
     nativeCtx.imageSmoothingEnabled = false
   },
   methods: {
-    handleDragStart () {
-      console.log('handlestart')
-      this.isDragging = true;
-    },
     handleDragEnd (e, blockId) {
+      // aligns block to grid
+      const x = Math.round(e.target.x() / this.sqrHeight) * this.sqrWidth
+      const y = Math.round(e.target.y() / this.sqrHeight) * this.sqrWidth
       e.target.to({
-        x: Math.round(e.target.x() / this.sqrHeight) * this.sqrWidth,
-        y: Math.round(e.target.y() / this.sqrHeight) * this.sqrWidth
+        x: x,
+        y: y
       })
-      console.log('handleend')
-      this.isDragging = false;
+      // emits info to parent
       this.$emit('dragend', {
         position: {
-          x: Math.round(e.target.x() / this.sqrHeight) * this.sqrWidth,
-          y: Math.round(e.target.y() / this.sqrHeight) * this.sqrWidth
+          x: x,
+          y: y
         },
         blockId: blockId,
         center: {
-          x: Math.round(e.target.x() / this.sqrHeight) * this.sqrWidth + ((this.sqrWidth) / 2) + 0.5,
-          y: Math.round(e.target.y() / this.sqrHeight) * this.sqrWidth + ((this.sqrHeight) / 2) + 0.5
+          x: x + ((this.sqrWidth) / 2) + 0.5,
+          y: y + ((this.sqrHeight) / 2) + 0.5
         }
       })
     },
@@ -133,7 +130,11 @@ export default {
       if (e.evt.button === 2) {
         e.evt.preventDefault()
         this.$emit('contextmenu', {
-         blockId: blockId
+          blockId: blockId,
+          center: {
+            x: e.evt.x,
+            y: e.evt.y
+          }
         })
       }
     },
@@ -144,6 +145,15 @@ export default {
     },
     selectBlock (blockId) {
       this.$emit('clicked', blockId)
+    },
+    handleZoom (e) {
+      if (e.evt.deltaY < 0) {
+        this.stageSize.scaleX = this.stageSize.scaleX * 1.01
+        this.stageSize.scaleY = this.stageSize.scaleY * 1.01
+      } else if (e.evt.deltaY > 0) {
+        this.stageSize.scaleX = this.stageSize.scaleX / -1.01
+        this.stageSize.scaleY = this.stageSize.scaleY / -1.01
+      }
     }
   }
 };

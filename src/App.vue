@@ -131,12 +131,11 @@ export default {
     contextMenu (data) {
       console.log(data)
       this.selectedSqr = data.blockId
-      let sqr = this.sqrs.find(obj => obj.id == this.selectedSqr)
       // show menu
       let menuNode = this.$refs.menu
       menuNode.style.display = 'block'
-      menuNode.style.top = sqr.y + 4 +'px'
-      menuNode.style.left = sqr.x + 4 + 'px'
+      menuNode.style.top = data.center.y + 4 +'px'
+      menuNode.style.left = data.center.x + 4 + 'px'
     },
     delImage () {
       // let blockInfo = this.sqrs.filter(block => block.id = this.selectedSqr)[0]

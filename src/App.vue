@@ -34,7 +34,7 @@
           <input
             id="search"
             type="text"
-            placeholder="Search blocks"
+            value="glazed"
             @input="searchBlock"
           />
           <div
@@ -86,9 +86,9 @@ export default {
       square: {},
       image: null,
       blocks: blocks,
-      searchVal: null,
+      searchVal: 'glazed',
       debounce: null,
-      filteredBlocks: null,
+      filteredBlocks: [],
       sqrId: 0,
       selectedSqr: null
     }
@@ -96,6 +96,9 @@ export default {
   mounted () {
     this.stageWidth = this.$refs.canvas.clientWidth
     this.loaded = true
+    this.filteredBlocks = this.blocks.filter((item) => (item.name.includes(this.searchVal.toLowerCase()) && item.texture))
+    console.log(this.filteredBlocks)
+
   },
   methods: {
     /**
@@ -142,7 +145,7 @@ export default {
       }
     },
     /**
-     * busca al tipear
+     * search while typing
      */
     searchBlock (event) {
       this.filteredBlocks = null
@@ -158,6 +161,7 @@ export default {
         }
       }, 600)
     },
+
     contextMenu (data) {
       console.log(data)
       this.selectedSqr = data.blockId
@@ -216,10 +220,8 @@ export default {
       sqr.rotation = rotation
     },
     previewRotate (deg) {
-      console.log(deg)
       this.square.rotation = this.square.rotation + deg
     }
-
   }
 }
 </script>

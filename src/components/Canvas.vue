@@ -147,13 +147,10 @@ export default {
       this.$emit('clicked', blockId)
     },
     handleZoom (e) {
-      if (e.evt.deltaY < 0) {
-        this.stageSize.scaleX = this.stageSize.scaleX * 1.01
-        this.stageSize.scaleY = this.stageSize.scaleY * 1.01
-      } else if (e.evt.deltaY > 0) {
-        this.stageSize.scaleX = this.stageSize.scaleX / -1.01
-        this.stageSize.scaleY = this.stageSize.scaleY / -1.01
-      }
+      const scaleBy = 1.01
+      const newScale = e.evt.deltaY > 0 ? this.stageSize.scaleX * scaleBy : this.stageSize.scaleX / scaleBy
+      this.stageSize.scaleX = newScale
+      this.stageSize.scaleY = newScale
     }
   }
 };

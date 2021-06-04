@@ -31,9 +31,9 @@ export default {
 
 <style scoped>
 img {
-  width: 32px;
-  height: 32px;
-  margin: 10px;
+  width: 3vw;
+  height: 3vw;
+  margin-right: 0.3em;
   image-rendering: pixelated;
 }
 </style>

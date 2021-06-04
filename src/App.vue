@@ -14,12 +14,14 @@
       id="creative-modal"
     >
       <div id="search-box">
-        <input
+        <!-- <input
           id="search"
           type="text"
           value="glazed"
           @input="searchBlock"
-        />
+        /> -->
+        SEARCH
+      </div>
         <div id="block-modal">
           <Block
             v-for="(block, index) in filteredBlocks"
@@ -28,28 +30,34 @@
             @click="getImgData"
           />
         </div>
-      </div>
     </div>
     <div id="hotbar">
-      <div id="hotbar-bg">
-        ASDFAHJSKD
+      <div class="grid-container">
+          <div 
+            v-for="n in 9"
+            :key="n"
+            class="grid-child"
+          >
+
+          </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Canvas from './components/Canvas.vue'
 import blocks from '@/assets/blocks.json'
+import Canvas from './components/Canvas.vue'
 import Block from '@/components/Block'
+// import HotBarItem from '@/components/HotbarItem.vue'
 
 const blockSize = 16 * 3
-
 export default {
   name: 'App',
   components: {
     Canvas,
-    Block
+    Block,
+    // HotBarItem
   },
   data () {
     return {
@@ -233,7 +241,6 @@ export default {
 body {
   margin: 0;
   padding: 0;
-  
 }
 
 #app {
@@ -242,76 +249,61 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
-
-#menu {
-  display: none;
-  position: absolute;
-}
-
-#menu button {
-  width: 100%;
-  border: none;
-  margin: 0;
-  padding: 15px;
-}
-img {
-  width: 48px;
-  height: 48px;
-  margin: 10px;
-  image-rendering: pixelated;
-}
-
 /* The Modal (background) */
 #creative-modal {
   display: block;
-  position: fixed; /* Stay in place */
-  z-index: 2; /* Sit on top */
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
 }
 
 #search-box {
   width: 35%;
-  height: 35%;
+  height: 2vw;
   margin-left: auto;
   margin-right: auto;
   margin-top: 15vh;
-  background-image: url("/imgs/tab_item_search.png");
+  background-image: url("/imgs/creative_search.png");
   background-repeat: no-repeat;
   background-size: cover;
   image-rendering: pixelated;
 }
 
 #block-modal {
-  padding-top: 5vh;
+  padding-top: 15vh;
 }
+
 
 #hotbar {
-  display: block;
-  position: absolute; /* Stay in place */
+  display: flex;
+  position: absolute;
   z-index: 1; /* Sit on top */
-  margin-left: auto;
-  margin-right: auto;
   bottom: 0;
+  margin-left: auto;
+  margin-left: auto;
   width: 100%;
-  height: 10%;
+
+  align-items: center;
+  justify-content: center;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    height: 100%
 }
 
-#hotbar-bg {
-  width: 50%;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  background-image: url("/imgs/hotbar.png");
+.grid-child {
+  height: 3.8vw;
+  width: 3.8vw;
+  background-image: url("/imgs/hotbar-block.png");
   background-repeat: no-repeat;
   background-size: cover;
-  image-rendering: pixelated;
 }
 </style>

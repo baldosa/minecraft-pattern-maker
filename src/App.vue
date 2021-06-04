@@ -1,62 +1,37 @@
 <template>
   <div id="app" class="row is-marginless">
-    <div class="col-9 is-marginless" ref="canvas">
+    <div class="is-marginless" ref="canvas">
       <Canvas
-        v-if="loaded"
         :sqrs.sync="sqrs"
-        :stage-width="stageWidth"
         @click="addBlockToCanvas"
         @contextmenu="contextMenu"
         @dragend="handleBlockReposition"
         @clicked="selectBlock"
       />
     </div>
-    <div class="col-3 bg-light">
-      <div
-        v-if="Object.keys(square).length"
-        class="row"
-      >
-        <div class="col">
-          <img
-            :src="square.block"
-            :style="`transform: rotate(${square.rotation}deg);`"
+    <div
+      v-if="visibleMenu"
+      id="creative-modal"
+    >
+      <div id="search-box">
+        <!-- <input
+          id="search"
+          type="text"
+          value="glazed"
+          @input="searchBlock"
+        /> -->
+        <div id="block-modal">
+          <Block
+            v-for="(block, index) in filteredBlocks"
+            v-bind:key="index"
+            :block="block"
+            @click="getImgData"
           />
-          <div class="row">
-            <div class="col">
-              <button class="button icon-only" @click="previewRotate(-90)">↪</button>
-              <button class="button icon-only" @click="previewRotate(90)">↩</button>
-            </div>
-          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <input
-            id="search"
-            type="text"
-            value="glazed"
-            @input="searchBlock"
-          />
-          <div
-            class="mt-2"
-            v-if="filteredBlocks"
-          >
-            <Block
-              v-for="(block, index) in filteredBlocks"
-              v-bind:key="index"
-              :block="block"
-              @click="getImgData"
-            />
-          </div>
-        </div>
-      </div>
-      <div ref="menu" id="menu">
-        <div class="row">
-          <button class="col button icon-only" @click="rotateLeft">↪</button>
-          <button class="col button icon-only" @click="rotateRight">↩</button>
-          <button class="col button icon-only" @click="delImage">➖</button>
-          <button class="col button icon-only" @click="closeMenu">X</button>
-        </div>
+    </div>
+    <div id="hotbar">
+      <div id="hotbar-bg">
       </div>
     </div>
   </div>
@@ -77,7 +52,7 @@ export default {
   },
   data () {
     return {
-      loaded: false,
+      visibleMenu: false,
       sqrs: [],
       pos: {
         x: 20,
@@ -93,14 +68,31 @@ export default {
       selectedSqr: null
     }
   },
+  created () {
+    window.addEventListener("keydown", this.keyboardListener);
+  },
+  destroyed () {
+    window.removeEventListener("keydown", this.keyboardListener);
+  },
   mounted () {
-    this.stageWidth = this.$refs.canvas.clientWidth
-    this.loaded = true
     this.filteredBlocks = this.blocks.filter((item) => (item.name.includes(this.searchVal.toLowerCase()) && item.texture))
-    console.log(this.filteredBlocks)
-
   },
   methods: {
+    /**
+     * Keydown handler
+     */
+    keyboardListener (event) {
+      console.log('pressed', event.key)
+      if (event.key === "e" || event.key === "E") {
+        this.showMenu()
+      }
+    },
+    /**
+     * Shows menu
+     */
+    showMenu () {
+      this.visibleMenu = !this.visibleMenu
+    },
     /**
      * When result block is clicked loads the image
      */
@@ -161,9 +153,10 @@ export default {
         }
       }, 600)
     },
-
+    /**
+     * get blockid on right click
+     */
     contextMenu (data) {
-      console.log(data)
       this.selectedSqr = data.blockId
       // show menu
       let menuNode = this.$refs.menu
@@ -227,6 +220,11 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -251,6 +249,58 @@ img {
   width: 48px;
   height: 48px;
   margin: 10px;
+  image-rendering: pixelated;
+}
+
+/* The Modal (background) */
+#creative-modal {
+  display: block;
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#search-box {
+  width: 35%;
+  height: 35%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15vh;
+  background-image: url("/imgs/tab_item_search.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  image-rendering: pixelated;
+}
+
+#block-modal {
+  padding-top: 5vh;
+}
+
+#hotbar {
+  display: block;
+  position: absolute; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 0;
+  width: 100%;
+  height: 10%;
+}
+
+#hotbar-bg {
+  width: 50%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("/imgs/hotbar.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   image-rendering: pixelated;
 }
 </style>

@@ -30,22 +30,19 @@
 <script>
 const blockSize = 16 * 3
 const height = window.innerHeight;
+const width = window.innerWidth;
 
 export default {
   props: {
     sqrs: {
       type: Array,
       required: true
-    },
-    stageWidth: {
-      type: Number,
-      required: true
     }
   },
   data() {
     return {
       stageSize: {
-        width: this.stageWidth,
+        width: width,
         height: height,
         draggable: true,
         scaleX: 1,
@@ -62,9 +59,9 @@ export default {
       let rects = []
 
       const stagePos = {x: 0, y: 0}
-      const startX = Math.floor((-stagePos.x - this.stageWidth) / this.sqrWidth) * this.sqrWidth;
+      const startX = Math.floor((-stagePos.x - width) / this.sqrWidth) * this.sqrWidth;
       const endX =
-        Math.floor((-stagePos.x + this.stageWidth * 2) / this.sqrWidth) * this.sqrWidth;
+        Math.floor((-stagePos.x + width * 2) / this.sqrWidth) * this.sqrWidth;
 
       const startY =
         Math.floor((-stagePos.y - height) / this.sqrHeight) * this.sqrHeight;
@@ -77,7 +74,6 @@ export default {
           if (i === 4) {
             i = 0;
           }
-
           rects.push(
             {
               x: x,
@@ -147,8 +143,8 @@ export default {
       this.$emit('clicked', blockId)
     },
     handleZoom (e) {
-      const scaleBy = 1.01
-      const newScale = e.evt.deltaY > 0 ? this.stageSize.scaleX * scaleBy : this.stageSize.scaleX / scaleBy
+      const scaleBy = 1.05
+      const newScale = e.evt.deltaY < 0 ? this.stageSize.scaleX * scaleBy : this.stageSize.scaleX / scaleBy
       this.stageSize.scaleX = newScale
       this.stageSize.scaleY = newScale
     }
@@ -156,11 +152,3 @@ export default {
 };
 </script>
 
-<style>
-body {
-  margin: 0;
-  padding: 0;
-}
-
-
-</style>

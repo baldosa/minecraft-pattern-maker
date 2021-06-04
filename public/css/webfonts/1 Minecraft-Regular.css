@@ -1,0 +1,8 @@
+@font-face
+{
+    font-family: '1 Minecraft-Regular';
+  src: url('1 Minecraft-Regular.eot');
+      url('1 Minecraft-Regular.eot?#') format('embedded-opentype'),
+      url('1 Minecraft-Regular.woff') format('woff'),
+      url('1 Minecraft-Regular.ttf') format('truetype');
+}

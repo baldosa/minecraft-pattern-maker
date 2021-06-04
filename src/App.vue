@@ -14,12 +14,12 @@
       id="creative-modal"
     >
       <div id="search-box">
-        <!-- <input
+        <input
           id="search"
           type="text"
           value="glazed"
           @input="searchBlock"
-        /> -->
+        />
         <div id="block-modal">
           <Block
             v-for="(block, index) in filteredBlocks"
@@ -32,6 +32,7 @@
     </div>
     <div id="hotbar">
       <div id="hotbar-bg">
+        ASDFAHJSKD
       </div>
     </div>
   </div>
@@ -220,9 +221,19 @@ export default {
 </script>
 
 <style>
+@font-face
+{
+  font-family: '1 Minecraft-Regular';
+    src: url('/css/webfonts/1 Minecraft-Regular.woff') format('woff'),
+      url('/css/webfonts/1 Minecraft-Regular.eot'),
+      url('/css/webfonts/1 Minecraft-Regular.eot?#') format('embedded-opentype'),
+      url('/css/webfonts/1 Minecraft-Regular.ttf') format('truetype');
+}
+
 body {
   margin: 0;
   padding: 0;
+  
 }
 
 #app {

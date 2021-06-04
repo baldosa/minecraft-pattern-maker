@@ -1,0 +1,8 @@
+@font-face
+{
+    font-family: '3 Minecraft-Bold';
+  src: url('3 Minecraft-Bold.eot');
+      url('3 Minecraft-Bold.eot?#') format('embedded-opentype'),
+      url('3 Minecraft-Bold.woff') format('woff'),
+      url('3 Minecraft-Bold.ttf') format('truetype');
+}

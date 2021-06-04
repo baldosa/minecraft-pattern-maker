@@ -1,0 +1,32 @@
+@font-face
+{
+    font-family: '3 Minecraft-Bold';
+  src: url('3 Minecraft-Bold.eot');
+      url('3 Minecraft-Bold.eot?#') format('embedded-opentype'),
+      url('3 Minecraft-Bold.woff') format('woff'),
+      url('3 Minecraft-Bold.ttf') format('truetype');
+}
+@font-face
+{
+    font-family: '4 Minecraft-BoldItalic';
+  src: url('4 Minecraft-BoldItalic.eot');
+      url('4 Minecraft-BoldItalic.eot?#') format('embedded-opentype'),
+      url('4 Minecraft-BoldItalic.woff') format('woff'),
+      url('4 Minecraft-BoldItalic.ttf') format('truetype');
+}
+@font-face
+{
+    font-family: '2 Minecraft-Italic';
+  src: url('2 Minecraft-Italic.eot');
+      url('2 Minecraft-Italic.eot?#') format('embedded-opentype'),
+      url('2 Minecraft-Italic.woff') format('woff'),
+      url('2 Minecraft-Italic.ttf') format('truetype');
+}
+@font-face
+{
+    font-family: '1 Minecraft-Regular';
+  src: url('1 Minecraft-Regular.eot');
+      url('1 Minecraft-Regular.eot?#') format('embedded-opentype'),
+      url('1 Minecraft-Regular.woff') format('woff'),
+      url('1 Minecraft-Regular.ttf') format('truetype');
+}

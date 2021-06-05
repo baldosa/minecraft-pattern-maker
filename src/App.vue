@@ -13,15 +13,16 @@
       v-if="visibleMenu"
       id="creative-modal"
     >
-      <div id="search-box">
-        <!-- <input
-          id="search"
-          type="text"
-          value="glazed"
-          @input="searchBlock"
-        /> -->
-        SEARCH
-      </div>
+      <div class="creative-container">
+        <div id="search-box">
+          <!-- <input
+            id="search"
+            type="text"
+            value="glazed"
+            @input="searchBlock"
+          /> -->
+          asd
+        </div>
         <div id="block-modal">
           <Block
             v-for="(block, index) in filteredBlocks"
@@ -30,13 +31,17 @@
             @click="getImgData"
           />
         </div>
+        <div>
+          HOTBAR
+        </div>
+      </div>
     </div>
     <div id="hotbar">
-      <div class="grid-container">
+      <div class="hotbar-container">
           <div 
             v-for="n in 9"
             :key="n"
-            class="grid-child"
+            class="hotbar-child"
           >
 
           </div>
@@ -61,7 +66,7 @@ export default {
   },
   data () {
     return {
-      visibleMenu: false,
+      visibleMenu: true,
       sqrs: [],
       pos: {
         x: 20,
@@ -250,7 +255,33 @@ body {
   text-align: center;
   color: #2c3e50;
 }
-/* The Modal (background) */
+#hotbar {
+  display: flex;
+  position: absolute;
+  z-index: 1; /* Sit on top */
+  bottom: 0;
+  margin-left: auto;
+  margin-left: auto;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.hotbar-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  height: 100%
+}
+
+.hotbar-child {
+  height: 3.8vw;
+  width: 3.8vw;
+  background-image: url("/imgs/hotbar-block.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* modal */
 #creative-modal {
   display: block;
   position: fixed;
@@ -263,47 +294,25 @@ body {
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
 }
-
-#search-box {
-  width: 35%;
-  height: 2vw;
+.creative-container {
+  margin-top: 25vh;
+  height: 50%;
+  width: 40%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 15vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 6.26fr 1.93fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  justify-items: center;
+  align-items: center;
+}
+#search-box {
   background-image: url("/imgs/creative_search.png");
   background-repeat: no-repeat;
   background-size: cover;
-  image-rendering: pixelated;
-}
+  width: 100%
 
-#block-modal {
-  padding-top: 15vh;
-}
-
-
-#hotbar {
-  display: flex;
-  position: absolute;
-  z-index: 1; /* Sit on top */
-  bottom: 0;
-  margin-left: auto;
-  margin-left: auto;
-  width: 100%;
-
-  align-items: center;
-  justify-content: center;
-}
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    height: 100%
-}
-
-.grid-child {
-  height: 3.8vw;
-  width: 3.8vw;
-  background-image: url("/imgs/hotbar-block.png");
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 </style>

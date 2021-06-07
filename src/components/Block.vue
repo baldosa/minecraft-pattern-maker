@@ -1,9 +1,16 @@
 <template>
   <img
+    class="block"
     v-bind:src="getImg(block.name)"
     :alt="block.name"
-    @click="emitImgData(getImg(block.name))"
+    draggable
+    @dragstart="emitImgData(getImg(block.name))"
   />
+    <!-- <div class="cube">
+      <div :style="cssVars" class="face front"></div>
+      <div :style="cssVars" class="face side"></div>
+      <div :style="cssVars" class="face top"></div>
+    </div> -->
 </template>
 
 <script>
@@ -16,20 +23,44 @@ export default {
       require: true
     }
   },
+  data () {
+    return {
+      image: null
+    }
+  },
+  computed: {
+    cssVars() {
+      console.log(this.image)
+      return {
+        '--image': `url("${this.image}")`
+      }
+    }
+  },
+  mounted () {
+    this.image = this.getImg(this.block.name)
+  },
   methods: {
     getImg (name) {
       return mcAssets.textureContent[name].texture
     },
     emitImgData (data) {
-      this.$emit('click', {
+      this.$emit('dragend', {
         block: data
       })
+      console.log('emiting from blocks')
+    },
+    /**
+     * Dragged block to hotbar
+     */
+    blockToHotbar (e) {
+      console.log(e)
+      console.log("test")
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 img {
   width: 3vw;
   height: 3vw;

@@ -1,10 +1,9 @@
 <template>
-  <div id="app" class="row is-marginless">
+  <div v-hotkey="keymap" id="app" class="row is-marginless">
     <div class="is-marginless" ref="canvas">
       <Canvas
         :sqrs.sync="sqrs"
         @click="addBlockToCanvas"
-        @contextmenu="contextMenu"
         @dragend="handleBlockReposition"
         @clicked="selectBlock"
       />
@@ -12,38 +11,52 @@
     <div
       v-if="visibleMenu"
       id="creative-modal"
+      v-hotkey.stop="keymap"
     >
       <div class="creative-container">
         <div id="search-box">
-          <!-- <input
+          <input
             id="search"
             type="text"
-            value="glazed"
             @input="searchBlock"
-          /> -->
-          asd
+          />
+          <!-- asd -->
         </div>
-        <div id="block-modal">
+        <div id="blocks-modal">
           <Block
             v-for="(block, index) in filteredBlocks"
             v-bind:key="index"
             :block="block"
-            @click="getImgData"
+            draggable
+            @dragend="getImgData"
           />
         </div>
-        <div>
-          HOTBAR
+        <div id="hotbar-modal" 
+            >
+          <div 
+            class="hotbar-modal-child"
+            v-for="item in hotbar"
+            :key="item.slot"
+            @drop="blockToHotbar(item.slot)"
+            @dragenter.prevent @dragover.prevent
+          >
+            <img v-if="item.image"
+              v-bind:src="item.image.src"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div id="hotbar">
       <div class="hotbar-container">
           <div 
-            v-for="n in 9"
-            :key="n"
+            v-for="item in hotbar"
+            :key="item.slot"
             class="hotbar-child"
           >
-
+            <img v-if="item.image"
+              v-bind:src="item.image.src"
+            />
           </div>
       </div>
     </div>
@@ -54,19 +67,55 @@
 import blocks from '@/assets/blocks.json'
 import Canvas from './components/Canvas.vue'
 import Block from '@/components/Block'
-// import HotBarItem from '@/components/HotbarItem.vue'
 
 const blockSize = 16 * 3
 export default {
   name: 'App',
   components: {
     Canvas,
-    Block,
-    // HotBarItem
+    Block
   },
   data () {
     return {
-      visibleMenu: true,
+      visibleMenu: false,
+      hotbar: [
+        {
+          slot: 1,
+          image: null,
+        },
+        {
+          slot: 2,
+          image: null,
+        },
+        {
+          slot: 3,
+          image: null,
+        },
+        {
+          slot: 4,
+          image: null,
+        },
+        {
+          slot: 5,
+          image: null,
+        },
+        {
+          slot: 6,
+          image: null,
+        },
+        {
+          slot: 7,
+          image: null,
+        },
+        {
+          slot: 8,
+          image: null,
+        },
+        {
+          slot: 9,
+          image: null,
+        },
+      ],
       sqrs: [],
       pos: {
         x: 20,
@@ -75,52 +124,70 @@ export default {
       square: {},
       image: null,
       blocks: blocks,
-      searchVal: 'glazed',
       debounce: null,
       filteredBlocks: [],
       sqrId: 0,
       selectedSqr: null
     }
   },
-  created () {
-    window.addEventListener("keydown", this.keyboardListener);
-  },
-  destroyed () {
-    window.removeEventListener("keydown", this.keyboardListener);
+  computed: {
+    keymap () {
+      return {
+        // 'esc+ctrl' is OK.
+        'e': this.showModal,
+        '1': this.handleHotbarKey,
+        '2': this.handleHotbarKey,
+        '3': this.handleHotbarKey,
+        '4': this.handleHotbarKey,
+        '5': this.handleHotbarKey,
+        '6': this.handleHotbarKey,
+        '7': this.handleHotbarKey,
+        '8': this.handleHotbarKey,
+        '9': this.handleHotbarKey,
+        'a': this.rotateLeft,
+        'd': this.rotateRight,
+        's': this.delete,
+      }
+    }
   },
   mounted () {
-    this.filteredBlocks = this.blocks.filter((item) => (item.name.includes(this.searchVal.toLowerCase()) && item.texture))
+    this.filteredBlocks = this.blocks.filter((item) => (item.name.includes('glazed') && item.texture))
   },
   methods: {
     /**
-     * Keydown handler
-     */
-    keyboardListener (event) {
-      console.log('pressed', event.key)
-      if (event.key === "e" || event.key === "E") {
-        this.showMenu()
-      }
-    },
-    /**
      * Shows menu
      */
-    showMenu () {
+    showModal () {
       this.visibleMenu = !this.visibleMenu
     },
     /**
-     * When result block is clicked loads the image
+     * Dragged block to hotbar
+     */
+    blockToHotbar (slot) {
+      this.hotbar.find(obj => obj.slot == slot).image = this.image
+    },
+    /**
+     * select item in hotbar
+     */
+    handleHotbarKey (e) {
+      this.selectHotbar(e.key)
+    },
+    selectHotbar (slot) {
+      this.image = this.hotbar.find(obj => obj.slot == slot).image
+      this.square = {
+          image: this.image,
+          rotation: 0
+        }
+    },
+    /**
+     * When result block is dragend loads the image
      */
     getImgData (block) {
       const image = new Image()
       image.src = block.block
       image.onload = () => {
         this.image = image
-        this.square = {
-          image: image,
-          block: block.block,
-          rotation: 0
-        }
-        }
+      }
     },
     /**
      * Adds selected block to canvas
@@ -167,38 +234,20 @@ export default {
         }
       }, 600)
     },
-    /**
-     * get blockid on right click
-     */
-    contextMenu (data) {
-      this.selectedSqr = data.blockId
-      // show menu
-      let menuNode = this.$refs.menu
-      menuNode.style.display = 'block'
-      menuNode.style.top = data.center.y + 4 +'px'
-      menuNode.style.left = data.center.x + 4 + 'px'
-    },
-    delImage () {
-      // let blockInfo = this.sqrs.filter(block => block.id = this.selectedSqr)[0]
+    delete () {
       this.sqrs = this.sqrs.filter((obj) => {
         return obj.id !== this.selectedSqr;
       })
-
-      this.$refs.menu.style.display = 'none'
     },
     rotateRight () {
       let sqr = this.sqrs.find(obj => obj.id == this.selectedSqr)
       const rotation = sqr.rotation + 90
       this.rotateAroundCenter(sqr, rotation)
-      console.log('end', sqr.x, sqr.y)
     },
     rotateLeft () {
       let sqr = this.sqrs.find(obj => obj.id == this.selectedSqr)
       const rotation = sqr.rotation - 90
       this.rotateAroundCenter(sqr, rotation)
-    },
-    closeMenu () {
-      this.$refs.menu.style.display = 'none'
     },
     handleBlockReposition (data) {
       let sqr = this.sqrs.find(obj => obj.id == data.blockId)
@@ -208,7 +257,7 @@ export default {
       console.log(sqr.center)
     },
     selectBlock (blockId) {
-      console.log(blockId)
+      this.selectedSqr = blockId
     },
     rotatePoint ({ x, y }, deg) {
     const degToRad = Math.PI / 180
@@ -247,7 +296,9 @@ body {
   margin: 0;
   padding: 0;
 }
-
+img {
+  image-rendering: pixelated;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -255,6 +306,7 @@ body {
   text-align: center;
   color: #2c3e50;
 }
+/** hotbar **/
 #hotbar {
   display: flex;
   position: absolute;
@@ -279,13 +331,25 @@ body {
   background-image: url("/imgs/hotbar-block.png");
   background-repeat: no-repeat;
   background-size: cover;
+  overflow: hidden;
+  position: relative;
+}
+.hotbar-child img {
+    position: absolute;
+    left: -1000%;
+    right: -1000%;
+    top: -1000%;
+    bottom: -1000%;
+    margin: auto;
+    min-height: 80%;
+    min-width: 80%;
 }
 
 /* modal */
 #creative-modal {
   display: block;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   left: 0;
   top: 0;
   width: 100%;
@@ -295,9 +359,9 @@ body {
   background-color: rgba(0,0,0,0.4);
 }
 .creative-container {
-  margin-top: 25vh;
-  height: 50%;
-  width: 40%;
+  margin-top: 5vw;
+  height: 25vw;
+  width: 35vw;
   margin-left: auto;
   margin-right: auto;
   display: grid;
@@ -309,10 +373,50 @@ body {
   align-items: center;
 }
 #search-box {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
   background-image: url("/imgs/creative_search.png");
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100%
+  image-rendering: pixelated;
+  
+}
+#search-box input[type="text"] {
+  background: transparent;
+  border: none;
+  text-align: right;
+  padding-right: 2vw;
+  font-family: "1 Minecraft-Regular";
+}
 
+#blocks-modal {
+  width: 100%;
+  height: 100%;
+  background-image: url("/imgs/block-grid.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  image-rendering: pixelated;
+  padding-top: 1vw;
+}
+
+#hotbar-modal {
+  width: 100%;
+  height: 100%;
+  background-image: url("/imgs/hotbar-search.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  image-rendering: pixelated;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.hotbar-modal-child {
+  height: 3.8vw;
+  width: 3.8vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  position: relative;
 }
 </style>

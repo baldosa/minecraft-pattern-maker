@@ -10,7 +10,7 @@
           v-for="(rect, index) in rects"
           v-bind:key="index"
           :config="rect"
-          @click="mouseClickOnRect"
+          @contextmenu="mouseClickOnRect"
         />
       </v-layer>
       <v-layer ref="sqrslyr">
@@ -18,9 +18,8 @@
           v-for="(square, index) in sqrs"
           v-bind:key="index"
           :config="sqrs[index]"
-          @click="selectBlock(square.id)"
+          @click="selectBlock($event, square.id)"
           @dragend="handleDragEnd($event, square.id)"
-          @contextmenu="contextMenu($event, square.id)"
         />
       </v-layer>
     </v-stage>
@@ -122,25 +121,18 @@ export default {
         }
       })
     },
-    contextMenu (e, blockId) {
-      if (e.evt.button === 2) {
-        e.evt.preventDefault()
-        this.$emit('contextmenu', {
-          blockId: blockId,
-          center: {
-            x: e.evt.x,
-            y: e.evt.y
-          }
-        })
-      }
-    },
     mouseClickOnRect(event) {
-      if (event.target.attrs.center && event.evt.button === 0) {
-        this.$emit('click', event.target.attrs.center)
+      event.evt.preventDefault()
+      if (event.target.attrs.center && event.evt.button === 2) {
+        this.$emit('placeBlock', event.target.attrs.center)
       }
     },
-    selectBlock (blockId) {
-      this.$emit('clicked', blockId)
+    selectBlock (event, blockId) {
+      event.evt.preventDefault()
+      this.$emit('getBlock', {
+        blockId: blockId,
+        buttonPressed: event.evt.button
+        })
     },
     handleZoom (e) {
       const scaleBy = 1.05

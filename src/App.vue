@@ -3,9 +3,9 @@
     <div class="is-marginless" ref="canvas">
       <Canvas
         :sqrs.sync="sqrs"
-        @click="addBlockToCanvas"
+        @placeBlock="addBlockToCanvas"
         @dragend="handleBlockReposition"
-        @clicked="selectBlock"
+        @getBlock.prevent="selectBlock"
       />
     </div>
     <div
@@ -256,7 +256,9 @@ export default {
       sqr.center = data.center
       console.log(sqr.center)
     },
-    selectBlock (blockId) {
+    selectBlock (blockId, event) {
+      console.log('blocke', blockId)
+      console.log('event', event)
       this.selectedSqr = blockId
     },
     rotatePoint ({ x, y }, deg) {

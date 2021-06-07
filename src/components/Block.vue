@@ -30,7 +30,6 @@ export default {
   },
   computed: {
     cssVars() {
-      console.log(this.image)
       return {
         '--image': `url("${this.image}")`
       }
@@ -47,7 +46,6 @@ export default {
       this.$emit('dragend', {
         block: data
       })
-      console.log('emiting from blocks')
     },
     /**
      * Dragged block to hotbar

@@ -1,5 +1,5 @@
 <template>
-  <div class="is-full-screen">
+  <div>
     <v-stage
       ref="stage"
       :config="stageSize"
@@ -20,6 +20,7 @@
           :config="sqrs[index]"
           @click="selectBlock($event, square.id)"
           @dragend="handleDragEnd($event, square.id)"
+          @mousemove="getBlockId(square.id)"
         />
       </v-layer>
     </v-stage>
@@ -129,16 +130,16 @@ export default {
     },
     selectBlock (event, blockId) {
       event.evt.preventDefault()
-      this.$emit('getBlock', {
-        blockId: blockId,
-        buttonPressed: event.evt.button
-        })
+      this.$emit('getBlock', blockId)
     },
     handleZoom (e) {
-      const scaleBy = 1.05
+      const scaleBy = 1.15
       const newScale = e.evt.deltaY < 0 ? this.stageSize.scaleX * scaleBy : this.stageSize.scaleX / scaleBy
       this.stageSize.scaleX = newScale
       this.stageSize.scaleY = newScale
+    },
+    getBlockId (blockId) {
+      this.$emit('selBlock', blockId)
     }
   }
 };

@@ -5,7 +5,8 @@
         :sqrs.sync="sqrs"
         @placeBlock="addBlockToCanvas"
         @dragend="handleBlockReposition"
-        @getBlock.prevent="selectBlock"
+        @getBlock="deleteBlock"
+        @selBlock="handleBlockSelection"
       />
     </div>
     <div
@@ -145,8 +146,7 @@ export default {
         '8': this.handleHotbarKey,
         '9': this.handleHotbarKey,
         'a': this.rotateLeft,
-        'd': this.rotateRight,
-        's': this.delete,
+        'd': this.rotateRight
       }
     }
   },
@@ -195,6 +195,7 @@ export default {
     addBlockToCanvas (pos) {
       this.pos = pos
       this.sqrId = this.sqrId + 1
+      this.selectedSqr = this.sqrId
       const square = { ...this.square }
       Object.assign(square, {
         x: Math.round((this.pos.x-1) / blockSize) * blockSize,
@@ -234,11 +235,6 @@ export default {
         }
       }, 600)
     },
-    delete () {
-      this.sqrs = this.sqrs.filter((obj) => {
-        return obj.id !== this.selectedSqr;
-      })
-    },
     rotateRight () {
       let sqr = this.sqrs.find(obj => obj.id == this.selectedSqr)
       const rotation = sqr.rotation + 90
@@ -254,12 +250,11 @@ export default {
       sqr.x = data.position.x
       sqr.y = data.position.y
       sqr.center = data.center
-      console.log(sqr.center)
     },
-    selectBlock (blockId, event) {
-      console.log('blocke', blockId)
-      console.log('event', event)
-      this.selectedSqr = blockId
+    deleteBlock (blockId) {
+      this.sqrs = this.sqrs.filter((obj) => {
+        return obj.id !== blockId;
+      })
     },
     rotatePoint ({ x, y }, deg) {
     const degToRad = Math.PI / 180
@@ -277,8 +272,8 @@ export default {
       sqr.y = Math.round((sqr.y + dy-1) / blockSize) * blockSize
       sqr.rotation = rotation
     },
-    previewRotate (deg) {
-      this.square.rotation = this.square.rotation + deg
+    handleBlockSelection (data) {
+      this.selectedSqr = data
     }
   }
 }
@@ -412,10 +407,11 @@ img {
   image-rendering: pixelated;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
 }
 .hotbar-modal-child {
-  height: 3.8vw;
-  width: 3.8vw;
+  height: 3.5vw;
+  width: 3.5vw;
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;

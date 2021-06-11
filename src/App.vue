@@ -45,6 +45,9 @@
               v-bind:src="item.image.src"
             />
           </div>
+          <div 
+            class="hotbar-modal-child">
+            </div>
         </div>
       </div>
     </div>
@@ -78,7 +81,7 @@ export default {
   },
   data () {
     return {
-      visibleMenu: false,
+      visibleMenu: true,
       hotbar: [
         {
           slot: 1,
@@ -134,7 +137,6 @@ export default {
   computed: {
     keymap () {
       return {
-        // 'esc+ctrl' is OK.
         'e': this.showModal,
         '1': this.handleHotbarKey,
         '2': this.handleHotbarKey,
@@ -305,15 +307,18 @@ img {
 }
 /** hotbar **/
 #hotbar {
-  display: flex;
+  /* display: flex;
   position: absolute;
-  z-index: 1; /* Sit on top */
+  z-index: 1;
   bottom: 0;
-  margin-left: auto;
-  margin-left: auto;
   width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
+
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  margin-left: -17.1vw;
 }
 
 .hotbar-container {
@@ -351,7 +356,6 @@ img {
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
 }
@@ -395,7 +399,10 @@ img {
   background-repeat: no-repeat;
   background-size: cover;
   image-rendering: pixelated;
-  padding-top: 1vw;
+  overflow: auto;
+  padding-top: 0.3vw;
+  padding-right: 0.3vw;
+  padding-left: 0.3vw;
 }
 
 #hotbar-modal {
@@ -406,15 +413,19 @@ img {
   background-size: cover;
   image-rendering: pixelated;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 0.35fr;
+  padding-left: 1.1vw;
+  padding-top: 1vw;
 }
-.hotbar-modal-child {
-  height: 3.5vw;
-  width: 3.5vw;
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
-  position: relative;
+.hotbar-modal-child img {
+  height: 3.1vw;
+  width: 3.1vw;
+  left: -1000%;
+  right: -1000%;
+  top: -1000%;
+  bottom: -1000%;
+  margin: auto;
+  min-height: 0%;
+  min-width: 0%;
 }
 </style>

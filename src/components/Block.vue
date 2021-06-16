@@ -1,10 +1,10 @@
 <template>
   <img
     class="block"
-    v-bind:src="getImg(block.name)"
+    :src="image"
     :alt="block.name"
     draggable
-    @dragstart="emitImgData(getImg(block.name))"
+    @dragstart="emitImgData(image)"
   />
     <!-- <div class="cube">
       <div :style="cssVars" class="face front"></div>
@@ -14,7 +14,6 @@
 </template>
 
 <script>
-const mcAssets = require("minecraft-assets")("1.16.4")
 
 export default {
   props: {
@@ -23,36 +22,16 @@ export default {
       require: true
     }
   },
-  data () {
-    return {
-      image: null
-    }
-  },
   computed: {
-    cssVars() {
-      return {
-        '--image': `url("${this.image}")`
-      }
+    image () {
+      return require(`@/assets/blocks/${this.block.imgPath}`)
     }
-  },
-  mounted () {
-    this.image = this.getImg(this.block.name)
   },
   methods: {
-    getImg (name) {
-      return mcAssets.textureContent[name].texture
-    },
     emitImgData (data) {
       this.$emit('dragend', {
         block: data
       })
-    },
-    /**
-     * Dragged block to hotbar
-     */
-    blockToHotbar (e) {
-      console.log(e)
-      console.log("test")
     }
   }
 }
@@ -62,7 +41,7 @@ export default {
 img {
   width: 3vw;
   height: 3vw;
-  margin-right: 0.3em;
+  margin-right: 0.3vw;
   image-rendering: pixelated;
 }
 </style>

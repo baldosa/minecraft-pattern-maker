@@ -24,13 +24,18 @@
           <!-- asd -->
         </div>
         <div id="blocks-modal">
-          <Block
-            v-for="(block, index) in filteredBlocks"
-            v-bind:key="index"
-            :block="block"
-            draggable
-            @dragend="getImgData"
-          />
+          <ul class="blocks">
+            <li
+              v-for="(block, index) in filteredBlocks"
+              v-bind:key="index"
+            >
+              <Block
+                :block="block"
+                draggable
+                @dragend="getImgData"
+              />
+            </li>
+          </ul>
         </div>
         <div id="hotbar-modal" 
             >
@@ -151,7 +156,7 @@ export default {
     }
   },
   mounted () {
-    this.filteredBlocks = this.blocks.filter((item) => (item.name.includes('glazed') && item.texture))
+    this.filteredBlocks = this.blocks.filter((item) => (item.blockName.includes('glazed')))
   },
   methods: {
     /**
@@ -228,7 +233,7 @@ export default {
       this.debounce = setTimeout(() => {
         this.searchVal = event.target.value
         if (event.target.value) {
-          this.filteredBlocks = this.blocks.filter((item) => (item.name.includes(this.searchVal.toLowerCase()) && item.texture))
+          this.filteredBlocks = this.blocks.filter((item) => (item.blockName.includes(this.searchVal.toLowerCase())))
           this.filteredBlocks.map((obj) => {
             obj.active = false
           })
@@ -300,7 +305,7 @@ img {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+
   color: #2c3e50;
 }
 /** hotbar **/
@@ -395,9 +400,20 @@ img {
   background-repeat: no-repeat;
   background-size: cover;
   image-rendering: pixelated;
-  padding-top: 1vw;
+  padding-top: 0.3vw;
+  padding-left: 1vw;
+  padding-right: 1.4vw;
+  overflow: auto;
 }
 
+ul.blocks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+  ul.blocks li {
+    display: inline;
+  }
 #hotbar-modal {
   width: 100%;
   height: 100%;
@@ -407,6 +423,10 @@ img {
   image-rendering: pixelated;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  padding-top: 1vw;
+  padding-left: 1.2vw;
+  padding-right: 1.1vw;
+  column-gap: 0.05vw;
 
 }
 .hotbar-modal-child {

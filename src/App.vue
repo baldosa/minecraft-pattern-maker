@@ -350,6 +350,8 @@ export default {
       localStorage.removeItem('sqrs')
       localStorage.sqrs = JSON.stringify(this.sqrs)
       // console.log(this.sqrs)
+      
+      this.showHelp = !this.showHelp
     },
     load () {
       if (this.$refs.file.files[0]) {
@@ -367,7 +369,7 @@ export default {
           vm.sqrId = fileContent.reduce((max, p) => p.id > max ? p.id : max, fileContent[0].id)+1
         };
         reader.readAsText(importedFile)
-
+        vm.showHelp = !vm.showHelp
       }
     },
     exportJson () {
@@ -380,6 +382,7 @@ export default {
       document.body.appendChild(link);
       link.click()
       document.body.removeChild(link);
+      this.showHelp = !this.showHelp
     }
   }
 }

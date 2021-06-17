@@ -20,7 +20,7 @@
           :config="sqrs[index]"
           @click="selectBlock($event, square.id)"
           @dragend="handleDragEnd($event, square.id)"
-          @mousemove="getBlockId(square.id)"
+          @mousemove="getBlockId($event, square.id)"
         />
       </v-layer>
     </v-stage>
@@ -138,7 +138,8 @@ export default {
       this.stageSize.scaleX = newScale
       this.stageSize.scaleY = newScale
     },
-    getBlockId (blockId) {
+    getBlockId (event, blockId) {
+      event.evt.preventDefault()
       this.$emit('selBlock', blockId)
     }
   }

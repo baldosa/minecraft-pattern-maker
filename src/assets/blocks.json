@@ -306,6 +306,24 @@
         "imgPath": "air.png"
     },
     {
+        "block": "allium",
+        "blockName": "allium",
+        "pos": 1690,
+        "section": 20,
+        "left": 144,
+        "top": 1120,
+        "imgPath": "allium.png"
+    },
+    {
+        "block": "allow",
+        "blockName": "allow",
+        "pos": 633,
+        "section": 29,
+        "left": 128,
+        "top": 416,
+        "imgPath": "allow.png"
+    },
+    {
         "block": "aluminum",
         "blockName": "aluminum",
         "pos": 879,
@@ -808,15 +826,6 @@
         "left": 80,
         "top": 1232,
         "imgPath": "beacon.png"
-    },
-    {
-        "block": "beacon-revision-1",
-        "blockName": "beacon revision 1",
-        "pos": 240,
-        "section": 31,
-        "left": -16,
-        "top": 160,
-        "imgPath": "beacon-revision-1.png"
     },
     {
         "block": "bedrock",
@@ -1755,15 +1764,6 @@
         "imgPath": "block-of-coal.png"
     },
     {
-        "block": "block-of-coal-revision-1",
-        "blockName": "block of coal revision 1",
-        "pos": 1339,
-        "section": 31,
-        "left": 288,
-        "top": 880,
-        "imgPath": "block-of-coal-revision-1.png"
-    },
-    {
         "block": "block-of-copper",
         "blockName": "block of copper",
         "pos": 9,
@@ -2419,24 +2419,6 @@
         "left": 288,
         "top": 928,
         "imgPath": "bricks.png"
-    },
-    {
-        "block": "bricks-revision-1",
-        "blockName": "bricks revision 1",
-        "pos": 309,
-        "section": 31,
-        "left": 320,
-        "top": 192,
-        "imgPath": "bricks-revision-1.png"
-    },
-    {
-        "block": "bricks-revision-2",
-        "blockName": "bricks revision 2",
-        "pos": 1906,
-        "section": 31,
-        "left": 144,
-        "top": 1264,
-        "imgPath": "bricks-revision-2.png"
     },
     {
         "block": "bricks-slab",
@@ -3384,15 +3366,6 @@
         "imgPath": "chiseled-nether-bricks.png"
     },
     {
-        "block": "chiseled-nether-bricks-revision-1",
-        "blockName": "chiseled nether bricks revision 1",
-        "pos": 2220,
-        "section": 31,
-        "left": 176,
-        "top": 1472,
-        "imgPath": "chiseled-nether-bricks-revision-1.png"
-    },
-    {
         "block": "chiseled-polished-blackstone",
         "blockName": "chiseled polished blackstone",
         "pos": 2203,
@@ -3654,24 +3627,6 @@
         "imgPath": "cobblestone-monster-egg.png"
     },
     {
-        "block": "cobblestone-revision-1",
-        "blockName": "cobblestone revision 1",
-        "pos": 520,
-        "section": 31,
-        "left": 240,
-        "top": 336,
-        "imgPath": "cobblestone-revision-1.png"
-    },
-    {
-        "block": "cobblestone-revision-2",
-        "blockName": "cobblestone revision 2",
-        "pos": 544,
-        "section": 31,
-        "left": 240,
-        "top": 352,
-        "imgPath": "cobblestone-revision-2.png"
-    },
-    {
         "block": "cobblestone-slab",
         "blockName": "cobblestone slab",
         "pos": 1462,
@@ -3832,15 +3787,6 @@
         "left": 64,
         "top": 1184,
         "imgPath": "command-block.png"
-    },
-    {
-        "block": "command-block-revision-1",
-        "blockName": "command block revision 1",
-        "pos": 547,
-        "section": 31,
-        "left": 288,
-        "top": 352,
-        "imgPath": "command-block-revision-1.png"
     },
     {
         "block": "command-blocks",
@@ -4435,15 +4381,6 @@
         "left": 64,
         "top": 1440,
         "imgPath": "crying-obsidian.png"
-    },
-    {
-        "block": "crying-obsidian-revision-1",
-        "blockName": "crying obsidian revision 1",
-        "pos": 776,
-        "section": 31,
-        "left": 112,
-        "top": 512,
-        "imgPath": "crying-obsidian-revision-1.png"
     },
     {
         "block": "curium",
@@ -5922,15 +5859,6 @@
         "imgPath": "dirt-path.png"
     },
     {
-        "block": "dirt-revision-1",
-        "blockName": "dirt revision 1",
-        "pos": 1868,
-        "section": 31,
-        "left": 304,
-        "top": 1232,
-        "imgPath": "dirt-revision-1.png"
-    },
-    {
         "block": "dirt-slab",
         "blockName": "dirt slab",
         "pos": 185,
@@ -5947,15 +5875,6 @@
         "left": 256,
         "top": 928,
         "imgPath": "dispenser.png"
-    },
-    {
-        "block": "dispenser-revision-1",
-        "blockName": "dispenser revision 1",
-        "pos": 522,
-        "section": 31,
-        "left": 272,
-        "top": 336,
-        "imgPath": "dispenser-revision-1.png"
     },
     {
         "block": "doors",
@@ -5983,42 +5902,6 @@
         "left": 48,
         "top": 1328,
         "imgPath": "double-acacia-wood-slab.png"
-    },
-    {
-        "block": "double-all-cut-copper-slabs",
-        "blockName": "double all cut copper slabs",
-        "pos": 52,
-        "section": 33,
-        "left": 48,
-        "top": 32,
-        "imgPath": "double-all-cut-copper-slabs.png"
-    },
-    {
-        "block": "double-all-prismarine-slabs",
-        "blockName": "double all prismarine slabs",
-        "pos": 1997,
-        "section": 11,
-        "left": 64,
-        "top": 1328,
-        "imgPath": "double-all-prismarine-slabs.png"
-    },
-    {
-        "block": "double-all-slabs",
-        "blockName": "double all slabs",
-        "pos": 1998,
-        "section": 11,
-        "left": 80,
-        "top": 1328,
-        "imgPath": "double-all-slabs.png"
-    },
-    {
-        "block": "double-all-wooden-slabs",
-        "blockName": "double all wooden slabs",
-        "pos": 1999,
-        "section": 11,
-        "left": 96,
-        "top": 1328,
-        "imgPath": "double-all-wooden-slabs.png"
     },
     {
         "block": "double-birch-slab",
@@ -7533,15 +7416,6 @@
         "imgPath": "glass-pane.png"
     },
     {
-        "block": "glazed-terracotta",
-        "blockName": "glazed terracotta",
-        "pos": 412,
-        "section": 3,
-        "left": 48,
-        "top": 272,
-        "imgPath": "glazed-terracotta.png"
-    },
-    {
         "block": "glow-lichen",
         "blockName": "glow lichen",
         "pos": 118,
@@ -7569,15 +7443,6 @@
         "imgPath": "glowstone.png"
     },
     {
-        "block": "glowstone-revision-1",
-        "blockName": "glowstone revision 1",
-        "pos": 1908,
-        "section": 31,
-        "left": 176,
-        "top": 1264,
-        "imgPath": "glowstone-revision-1.png"
-    },
-    {
         "block": "gold",
         "blockName": "gold",
         "pos": 917,
@@ -7603,15 +7468,6 @@
         "left": 128,
         "top": 1248,
         "imgPath": "gold-block-bottom.png"
-    },
-    {
-        "block": "gold-block-revision-1",
-        "blockName": "gold block revision 1",
-        "pos": 1889,
-        "section": 31,
-        "left": 256,
-        "top": 1248,
-        "imgPath": "gold-block-revision-1.png"
     },
     {
         "block": "gold-block-side",
@@ -7722,24 +7578,6 @@
         "imgPath": "grass-block.png"
     },
     {
-        "block": "grass-block-revision-1",
-        "blockName": "grass block revision 1",
-        "pos": 1874,
-        "section": 31,
-        "left": 16,
-        "top": 1248,
-        "imgPath": "grass-block-revision-1.png"
-    },
-    {
-        "block": "grass-block-revision-2",
-        "blockName": "grass block revision 2",
-        "pos": 1952,
-        "section": 31,
-        "left": 112,
-        "top": 1296,
-        "imgPath": "grass-block-revision-2.png"
-    },
-    {
         "block": "grass-block-side",
         "blockName": "grass block side",
         "pos": 1261,
@@ -7749,24 +7587,6 @@
         "imgPath": "grass-block-side.png"
     },
     {
-        "block": "grass-block-side-revision-1",
-        "blockName": "grass block side revision 1",
-        "pos": 1874,
-        "section": 31,
-        "left": 16,
-        "top": 1248,
-        "imgPath": "grass-block-side-revision-1.png"
-    },
-    {
-        "block": "grass-block-side-revision-2",
-        "blockName": "grass block side revision 2",
-        "pos": 1952,
-        "section": 31,
-        "left": 112,
-        "top": 1296,
-        "imgPath": "grass-block-side-revision-2.png"
-    },
-    {
         "block": "grass-block-top",
         "blockName": "grass block top",
         "pos": 1,
@@ -7774,24 +7594,6 @@
         "left": 0,
         "top": 0,
         "imgPath": "grass-block-top.png"
-    },
-    {
-        "block": "grass-block-top-revision-1",
-        "blockName": "grass block top revision 1",
-        "pos": 496,
-        "section": 31,
-        "left": 240,
-        "top": 320,
-        "imgPath": "grass-block-top-revision-1.png"
-    },
-    {
-        "block": "grass-block-top-revision-2",
-        "blockName": "grass block top revision 2",
-        "pos": 1951,
-        "section": 31,
-        "left": 96,
-        "top": 1296,
-        "imgPath": "grass-block-top-revision-2.png"
     },
     {
         "block": "grass-path",
@@ -7828,24 +7630,6 @@
         "left": 208,
         "top": 832,
         "imgPath": "gravel.png"
-    },
-    {
-        "block": "gravel-revision-1",
-        "blockName": "gravel revision 1",
-        "pos": 545,
-        "section": 31,
-        "left": 256,
-        "top": 352,
-        "imgPath": "gravel-revision-1.png"
-    },
-    {
-        "block": "gravel-revision-2",
-        "blockName": "gravel revision 2",
-        "pos": 1907,
-        "section": 31,
-        "left": 160,
-        "top": 1264,
-        "imgPath": "gravel-revision-2.png"
     },
     {
         "block": "gray-banner",
@@ -9027,15 +8811,6 @@
         "imgPath": "impulse-command-block.png"
     },
     {
-        "block": "impulse-command-block-revision-1",
-        "blockName": "impulse command block revision 1",
-        "pos": 547,
-        "section": 31,
-        "left": 288,
-        "top": 352,
-        "imgPath": "impulse-command-block-revision-1.png"
-    },
-    {
         "block": "indium",
         "blockName": "indium",
         "pos": 923,
@@ -9232,15 +9007,6 @@
         "left": 80,
         "top": 1248,
         "imgPath": "iron-block-bottom.png"
-    },
-    {
-        "block": "iron-block-revision-1",
-        "blockName": "iron block revision 1",
-        "pos": 1876,
-        "section": 31,
-        "left": 48,
-        "top": 1248,
-        "imgPath": "iron-block-revision-1.png"
     },
     {
         "block": "iron-block-side",
@@ -9936,24 +9702,6 @@
         "imgPath": "lava-flow.png"
     },
     {
-        "block": "lava-flow-revision-1",
-        "blockName": "lava flow revision 1",
-        "pos": 1943,
-        "section": 31,
-        "left": 352,
-        "top": 1280,
-        "imgPath": "lava-flow-revision-1.png"
-    },
-    {
-        "block": "lava-revision-1",
-        "blockName": "lava revision 1",
-        "pos": 1944,
-        "section": 31,
-        "left": -16,
-        "top": 1296,
-        "imgPath": "lava-revision-1.png"
-    },
-    {
         "block": "lava-top",
         "blockName": "lava top",
         "pos": 1948,
@@ -9961,15 +9709,6 @@
         "left": 48,
         "top": 1296,
         "imgPath": "lava-top.png"
-    },
-    {
-        "block": "lava-top-revision-1",
-        "blockName": "lava top revision 1",
-        "pos": 1942,
-        "section": 31,
-        "left": 336,
-        "top": 1280,
-        "imgPath": "lava-top-revision-1.png"
     },
     {
         "block": "lawrencium",
@@ -10033,15 +9772,6 @@
         "left": 208,
         "top": 688,
         "imgPath": "lectern-left.png"
-    },
-    {
-        "block": "lectern-revision-1",
-        "blockName": "lectern revision 1",
-        "pos": 1223,
-        "section": 31,
-        "left": 352,
-        "top": 800,
-        "imgPath": "lectern-revision-1.png"
     },
     {
         "block": "lectern-right",
@@ -11844,15 +11574,6 @@
         "imgPath": "monster-spawner.png"
     },
     {
-        "block": "monster-spawner-revision-1",
-        "blockName": "monster spawner revision 1",
-        "pos": 1875,
-        "section": 31,
-        "left": 32,
-        "top": 1248,
-        "imgPath": "monster-spawner-revision-1.png"
-    },
-    {
         "block": "moscovium",
         "blockName": "moscovium",
         "pos": 940,
@@ -11914,15 +11635,6 @@
         "left": 256,
         "top": 832,
         "imgPath": "mossy-cobblestone.png"
-    },
-    {
-        "block": "mossy-cobblestone-revision-1",
-        "blockName": "mossy cobblestone revision 1",
-        "pos": 1866,
-        "section": 31,
-        "left": 272,
-        "top": 1232,
-        "imgPath": "mossy-cobblestone-revision-1.png"
     },
     {
         "block": "mossy-cobblestone-slab",
@@ -12258,15 +11970,6 @@
         "imgPath": "nether-gold-ore.png"
     },
     {
-        "block": "nether-gold-ore-revision-1",
-        "blockName": "nether gold ore revision 1",
-        "pos": 2166,
-        "section": 31,
-        "left": 80,
-        "top": 1440,
-        "imgPath": "nether-gold-ore-revision-1.png"
-    },
-    {
         "block": "nether-portal",
         "blockName": "nether portal",
         "pos": 45,
@@ -12355,15 +12058,6 @@
         "left": 304,
         "top": 1392,
         "imgPath": "nether-wart-block.png"
-    },
-    {
-        "block": "nether-wart-block-revision-1",
-        "blockName": "nether wart block revision 1",
-        "pos": 1361,
-        "section": 1,
-        "left": 256,
-        "top": 896,
-        "imgPath": "nether-wart-block-revision-1.png"
     },
     {
         "block": "netherite-block",
@@ -12544,24 +12238,6 @@
         "left": 160,
         "top": 1136,
         "imgPath": "oak-leaves-fast.png"
-    },
-    {
-        "block": "oak-leaves-fast-revision-1",
-        "blockName": "oak leaves fast revision 1",
-        "pos": 1869,
-        "section": 31,
-        "left": 320,
-        "top": 1232,
-        "imgPath": "oak-leaves-fast-revision-1.png"
-    },
-    {
-        "block": "oak-leaves-revision-1",
-        "blockName": "oak leaves revision 1",
-        "pos": 1870,
-        "section": 31,
-        "left": 336,
-        "top": 1232,
-        "imgPath": "oak-leaves-revision-1.png"
     },
     {
         "block": "oak-log",
@@ -12789,15 +12465,6 @@
         "imgPath": "observer-bottom.png"
     },
     {
-        "block": "observer-front-revision-1",
-        "blockName": "observer front revision 1",
-        "pos": 581,
-        "section": 31,
-        "left": 64,
-        "top": 384,
-        "imgPath": "observer-front-revision-1.png"
-    },
-    {
         "block": "observer-side",
         "blockName": "observer side",
         "pos": 1559,
@@ -12823,15 +12490,6 @@
         "left": 320,
         "top": 832,
         "imgPath": "obsidian.png"
-    },
-    {
-        "block": "obsidian-revision-1",
-        "blockName": "obsidian revision 1",
-        "pos": 1887,
-        "section": 31,
-        "left": 224,
-        "top": 1248,
-        "imgPath": "obsidian-revision-1.png"
     },
     {
         "block": "oganesson",
@@ -13689,33 +13347,6 @@
         "imgPath": "planks.png"
     },
     {
-        "block": "planks-revision-0",
-        "blockName": "planks revision 0",
-        "pos": 1888,
-        "section": 31,
-        "left": 240,
-        "top": 1248,
-        "imgPath": "planks-revision-0.png"
-    },
-    {
-        "block": "planks-revision-1",
-        "blockName": "planks revision 1",
-        "pos": 521,
-        "section": 31,
-        "left": 256,
-        "top": 336,
-        "imgPath": "planks-revision-1.png"
-    },
-    {
-        "block": "planks-revision-2",
-        "blockName": "planks revision 2",
-        "pos": 1871,
-        "section": 31,
-        "left": 352,
-        "top": 1232,
-        "imgPath": "planks-revision-2.png"
-    },
-    {
         "block": "platinum",
         "blockName": "platinum",
         "pos": 954,
@@ -14317,15 +13948,6 @@
         "left": 288,
         "top": 864,
         "imgPath": "potted-acacia-sapling.png"
-    },
-    {
-        "block": "potted-allium",
-        "blockName": "potted allium",
-        "pos": 1316,
-        "section": 4,
-        "left": 304,
-        "top": 864,
-        "imgPath": "potted-allium.png"
     },
     {
         "block": "potted-azure-bluet",
@@ -15235,15 +14857,6 @@
         "left": 192,
         "top": 1456,
         "imgPath": "quartz-bricks.png"
-    },
-    {
-        "block": "quartz-bricks-revision-1",
-        "blockName": "quartz bricks revision 1",
-        "pos": 2221,
-        "section": 31,
-        "left": 192,
-        "top": 1472,
-        "imgPath": "quartz-bricks-revision-1.png"
     },
     {
         "block": "quartz-ore",
@@ -16839,15 +16452,6 @@
         "imgPath": "sand.png"
     },
     {
-        "block": "sand-revision-1",
-        "blockName": "sand revision 1",
-        "pos": 1886,
-        "section": 31,
-        "left": 208,
-        "top": 1248,
-        "imgPath": "sand-revision-1.png"
-    },
-    {
         "block": "sandstone",
         "blockName": "sandstone",
         "pos": 1280,
@@ -16927,24 +16531,6 @@
         "left": 336,
         "top": 736,
         "imgPath": "sandstone-wall.png"
-    },
-    {
-        "block": "sapling-revision-1",
-        "blockName": "sapling revision 1",
-        "pos": 1242,
-        "section": 31,
-        "left": 272,
-        "top": 816,
-        "imgPath": "sapling-revision-1.png"
-    },
-    {
-        "block": "sapling-revision-2",
-        "blockName": "sapling revision 2",
-        "pos": 1885,
-        "section": 31,
-        "left": 192,
-        "top": 1248,
-        "imgPath": "sapling-revision-2.png"
     },
     {
         "block": "saplings",
@@ -17667,15 +17253,6 @@
         "imgPath": "soul-fire.png"
     },
     {
-        "block": "soul-fire-lantern-revision-1",
-        "blockName": "soul fire lantern revision 1",
-        "pos": 2213,
-        "section": 31,
-        "left": 64,
-        "top": 1472,
-        "imgPath": "soul-fire-lantern-revision-1.png"
-    },
-    {
         "block": "soul-lantern",
         "blockName": "soul lantern",
         "pos": 2144,
@@ -17746,15 +17323,6 @@
         "left": 0,
         "top": 1040,
         "imgPath": "sponge.png"
-    },
-    {
-        "block": "sponge-revision-1",
-        "blockName": "sponge revision 1",
-        "pos": 73,
-        "section": 31,
-        "left": 0,
-        "top": 48,
-        "imgPath": "sponge-revision-1.png"
     },
     {
         "block": "spore-blossom",
@@ -18205,15 +17773,6 @@
         "left": 144,
         "top": 1216,
         "imgPath": "stone-pressure-plate.png"
-    },
-    {
-        "block": "stone-revision-1",
-        "blockName": "stone revision 1",
-        "pos": 1872,
-        "section": 31,
-        "left": -16,
-        "top": 1248,
-        "imgPath": "stone-revision-1.png"
     },
     {
         "block": "stone-slab",
@@ -18792,15 +18351,6 @@
         "imgPath": "structure-block-load.png"
     },
     {
-        "block": "structure-block-revision-1",
-        "blockName": "structure block revision 1",
-        "pos": 504,
-        "section": 31,
-        "left": -16,
-        "top": 336,
-        "imgPath": "structure-block-revision-1.png"
-    },
-    {
         "block": "structure-block-save",
         "blockName": "structure block save",
         "pos": 374,
@@ -18844,15 +18394,6 @@
         "left": 48,
         "top": 1168,
         "imgPath": "sugar-cane.png"
-    },
-    {
-        "block": "sugar-cane-revision-1",
-        "blockName": "sugar cane revision 1",
-        "pos": 507,
-        "section": 31,
-        "left": 32,
-        "top": 336,
-        "imgPath": "sugar-cane-revision-1.png"
     },
     {
         "block": "sulfur",
@@ -19998,15 +19539,6 @@
         "imgPath": "water-flow-pre-update-aquatic.png"
     },
     {
-        "block": "water-flow-revision-1",
-        "blockName": "water flow revision 1",
-        "pos": 1940,
-        "section": 31,
-        "left": 304,
-        "top": 1280,
-        "imgPath": "water-flow-revision-1.png"
-    },
-    {
         "block": "water-pre-update-aquatic",
         "blockName": "water pre update aquatic",
         "pos": 1947,
@@ -20014,15 +19546,6 @@
         "left": 32,
         "top": 1296,
         "imgPath": "water-pre-update-aquatic.png"
-    },
-    {
-        "block": "water-revision-1",
-        "blockName": "water revision 1",
-        "pos": 1941,
-        "section": 31,
-        "left": 320,
-        "top": 1280,
-        "imgPath": "water-revision-1.png"
     },
     {
         "block": "water-top",
@@ -20041,15 +19564,6 @@
         "left": 0,
         "top": 1296,
         "imgPath": "water-top-pre-update-aquatic.png"
-    },
-    {
-        "block": "water-top-revision-1",
-        "blockName": "water top revision 1",
-        "pos": 1939,
-        "section": 31,
-        "left": 288,
-        "top": 1280,
-        "imgPath": "water-top-revision-1.png"
     },
     {
         "block": "water-warm-top",
@@ -20923,33 +20437,6 @@
         "left": 80,
         "top": 960,
         "imgPath": "wood-planks.png"
-    },
-    {
-        "block": "wood-planks-revision-0",
-        "blockName": "wood planks revision 0",
-        "pos": 1888,
-        "section": 31,
-        "left": 240,
-        "top": 1248,
-        "imgPath": "wood-planks-revision-0.png"
-    },
-    {
-        "block": "wood-planks-revision-1",
-        "blockName": "wood planks revision 1",
-        "pos": 521,
-        "section": 31,
-        "left": 256,
-        "top": 336,
-        "imgPath": "wood-planks-revision-1.png"
-    },
-    {
-        "block": "wood-planks-revision-2",
-        "blockName": "wood planks revision 2",
-        "pos": 1871,
-        "section": 31,
-        "left": 352,
-        "top": 1232,
-        "imgPath": "wood-planks-revision-2.png"
     },
     {
         "block": "wood-stairs",

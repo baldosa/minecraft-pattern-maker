@@ -29,9 +29,7 @@ export default {
   },
   methods: {
     emitImgData (data) {
-      this.$emit('dragend', {
-        block: data
-      })
+      this.$emit('dragend', data)
     }
   }
 }
@@ -39,9 +37,9 @@ export default {
 
 <style>
 img {
-  width: 3vw;
-  height: 3vw;
-  margin-right: 0.3vw;
+  width: 3.1vw;
+  height: 3.1vw;
+  margin: 0.055vw;
   image-rendering: pixelated;
 }
 </style>

@@ -2537,7 +2537,7 @@ const request = https.get(blockCssUrl, function(response) {
 
 // crop images
 for (const [key, value] of Object.entries(tableWithData.ids)) {
-  if (!key.startsWith("all")) {
+  if (!key.startsWith("all-") && !key.includes("-all") && !key.includes("revision-")) {
     let left = value.pos % tiles * size * scale-16
     let top = Math.floor( value.pos / tiles ) * size * scale
     sharp('./src/assets/BlockCSS.png')

@@ -66,6 +66,48 @@
           </div>
       </div>
     </div>
+    <div id="help">
+      <button
+        class="btn-help"
+        @click="help"
+        v-if="!showHelp"
+      >
+        <mdicon name="help" /> 
+      </button>
+      <div
+       v-if="showHelp"
+       class="help-menu"
+      >
+        <div class="row">
+          <div class="col-4">
+            <button
+              @click="save"
+            >
+              <mdicon name="content-save" /> 
+            </button>
+          </div>
+          <div class="col-4">
+            <label class="button">
+                <input
+                  ref="file"
+                  type="file"
+                  @change="load"
+                />
+                <mdicon name="upload" /> 
+            </label>
+
+          </div>
+          <div class="col-4">
+            <button
+              @click="exportJson"
+
+            >
+              <mdicon name="download" /> 
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -133,7 +175,9 @@ export default {
       debounce: null,
       filteredBlocks: [],
       sqrId: 0,
-      selectedSqr: null
+      selectedSqr: null,
+      showHelp: false,
+      downloadUrl: null
     }
   },
   computed: {
@@ -156,7 +200,18 @@ export default {
     }
   },
   mounted () {
+    // filter glazed for start
     this.filteredBlocks = this.blocks.filter((item) => (item.blockName.includes('glazed')))
+
+    // reads localstorage
+    if (localStorage.sqrs) {
+      const localStorageSqrs = JSON.parse(localStorage.sqrs)
+      localStorageSqrs.forEach((el) => {
+        el.image = this.getImgData(el.img)
+      })
+      this.sqrs = localStorageSqrs
+    }
+
   },
   methods: {
     /**
@@ -181,46 +236,50 @@ export default {
       this.image = this.hotbar.find(obj => obj.slot == slot).image
       this.square = {
           image: this.image,
+          img: this.image.src,
           rotation: 0
         }
     },
     /**
      * When result block is dragend loads the image
      */
-    getImgData (block) {
+    getImgData (base64Img) {
       const image = new Image()
-      image.src = block.block
+      image.src = base64Img
       image.onload = () => {
         this.image = image
       }
+      return image
     },
     /**
      * Adds selected block to canvas
      */
     addBlockToCanvas (pos) {
-      this.pos = pos
-      this.sqrId = this.sqrId + 1
-      this.selectedSqr = this.sqrId
-      const square = { ...this.square }
-      Object.assign(square, {
-        x: Math.round((this.pos.x-1) / blockSize) * blockSize,
-        y: Math.round((this.pos.y-1) / blockSize) * blockSize,
-        width: blockSize,
-        height: blockSize,
-        draggable: true,
-        shadowBlur: 0,
-        center: {
-          x: this.pos.x,
-          y: this.pos.y
-        },
-        id: this.sqrId,
-        rotation: 0
-      })
-      // do stuff to align new sqr to grid
-      this.sqrs.push(square)
-      if (this.square.rotation != 0) {
-        let sqr = this.sqrs.find(obj => obj.id == this.sqrId)
-        this.rotateAroundCenter(sqr, this.square.rotation)
+      if (this.image) {
+        this.pos = pos
+        this.sqrId = this.sqrId + 1
+        this.selectedSqr = this.sqrId
+        const square = { ...this.square }
+        Object.assign(square, {
+          x: Math.round((this.pos.x-1) / blockSize) * blockSize,
+          y: Math.round((this.pos.y-1) / blockSize) * blockSize,
+          width: blockSize,
+          height: blockSize,
+          draggable: true,
+          shadowBlur: 0,
+          center: {
+            x: this.pos.x,
+            y: this.pos.y
+          },
+          id: this.sqrId,
+          rotation: 0
+        })
+        // do stuff to align new sqr to grid
+        this.sqrs.push(square)
+        if (this.square.rotation != 0) {
+          let sqr = this.sqrs.find(obj => obj.id == this.sqrId)
+          this.rotateAroundCenter(sqr, this.square.rotation)
+        }
       }
     },
     /**
@@ -279,6 +338,47 @@ export default {
     },
     handleBlockSelection (data) {
       this.selectedSqr = data
+    },
+    help () {
+      this.showHelp = !this.showHelp
+    },
+    save () {
+      this.sqrs = this.sqrs.filter((item) => {
+          return (item.image !== null && this.img !== null)
+      })
+      localStorage.removeItem('sqrs')
+      localStorage.sqrs = JSON.stringify(this.sqrs)
+      // console.log(this.sqrs)
+    },
+    load () {
+      if (this.$refs.file.files[0]) {
+        console.log(this.$refs.file.files[0])
+        let importedFile = this.$refs.file.files[0]
+        const vm = this
+        let reader = new FileReader();
+        reader.onload = function() {
+          let fileContent = JSON.parse(reader.result);
+
+          fileContent.forEach((el) => {
+            el.image = vm.getImgData(el.img)
+          })
+          vm.sqrs = fileContent
+          console.log(this.sqrs)
+        };
+        reader.readAsText(importedFile)
+
+      }
+    },
+    exportJson () {
+      let contentType = 'application/json'
+      let dData = JSON.stringify(this.sqrs, null, 2)
+      let blob = new Blob([dData], { type: contentType })
+      let link = document.createElement('a')
+      link.href = window.URL.createObjectURL(blob)
+      link.download = 'mc-pattern.json'
+      document.body.appendChild(link);
+      link.click()
+      document.body.removeChild(link);
     }
   }
 }
@@ -302,7 +402,7 @@ img {
   image-rendering: pixelated;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "1 Minecraft-Regular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -360,81 +460,118 @@ img {
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
 }
-.creative-container {
-  margin-top: 5vw;
-  height: 25vw;
-  width: 35vw;
-  margin-left: auto;
-  margin-right: auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 6.26fr 1.93fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  justify-items: center;
-  align-items: center;
-}
-#search-box {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  background-image: url("/imgs/creative_search.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  image-rendering: pixelated;
-  
-}
-#search-box input[type="text"] {
-  background: transparent;
-  border: none;
-  text-align: right;
-  padding-right: 2vw;
-  font-family: "1 Minecraft-Regular";
-}
-
-#blocks-modal {
-  width: 100%;
-  height: 100%;
-  background-image: url("/imgs/block-grid.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  image-rendering: pixelated;
-  padding-top: 0.3vw;
-  padding-left: 1vw;
-  padding-right: 1.4vw;
-  overflow: auto;
-}
-
-ul.blocks {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-  ul.blocks li {
-    display: inline;
+  .creative-container {
+    margin-top: 5vw;
+    height: 25vw;
+    width: 35vw;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 6.26fr 1.93fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    justify-items: center;
+    align-items: center;
   }
-#hotbar-modal {
-  width: 100%;
-  height: 100%;
-  background-image: url("/imgs/hotbar-search.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  image-rendering: pixelated;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  padding-top: 1vw;
-  padding-left: 1.2vw;
-  padding-right: 1.1vw;
-  column-gap: 0.05vw;
+    #search-box {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      background-image: url("/imgs/creative_search.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      image-rendering: pixelated;
+      
+    }
+    #search-box input[type="text"] {
+      background: transparent;
+      border: none;
+      text-align: right;
+      padding-right: 2vw;
+      font-family: "1 Minecraft-Regular";
+    }
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    #blocks-modal {
+      width: 100%;
+      height: 100%;
+      background-image: url("/imgs/block-grid.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      image-rendering: pixelated;
+      padding-top: 0.15vw;
+      padding-left: 1.1vw;
+      padding-right: 1.3vw;
+      overflow: auto;
+    }
 
+    ul.blocks {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+      ul.blocks li {
+        display: inline;
+        margin: 0.2vw;
+      }
+    #hotbar-modal {
+      width: 100%;
+      height: 100%;
+      background-image: url("/imgs/hotbar-search.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      image-rendering: pixelated;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+      padding-top: 1.1vw;
+      padding-left: 1.3vw;
+      padding-right: 1.1vw;
+      column-gap: 0.05vw;
+
+    }
+    .hotbar-modal-child {
+      height: 3.5vw;
+      width: 3.5vw;
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow: hidden;
+      position: relative;
+    }
+
+/* help */
+#help {
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  margin-top: 1vw;
+  margin-right: 1vw;
 }
-.hotbar-modal-child {
-  height: 3.5vw;
-  width: 3.5vw;
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
-  position: relative;
+.btn-help {
+  background: orange;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+.help-menu {
+  background: #CCC;
+  width: 30vw;
+  height: 100%;
+  padding: 3em;
+}
+
+
+input[type="file"] {
+    display: none!important;;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
 }
 </style>
